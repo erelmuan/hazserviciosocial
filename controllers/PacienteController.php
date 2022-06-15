@@ -75,22 +75,48 @@ class PacienteController extends Controller {
         }
     }
 
+    public function validarPrincipal($domicilios){
+      //Contabiliza la cantidad de domicilios principales
+      $contabilizador=0;
+      foreach ($domicilios as $domicilio) {
+          //variable booleana, si esta como principal tiene que ser true
+            if($domicilio['principal'] == true){
+              $contabilizador++;
+          }
+      }
+        if ($contabilizador == 0){
+          $this->setearMensajeError('Debe elegir un domicilio como principal');
+          return false;
+        }
+        if ($contabilizador >1){
+          $this->setearMensajeError('Solo puede tener un domicilio principal');
+          return false;
+        }
+        return true ;
+        //VALIDAR TAMBIEN QUE NO SEA DOMICILIO PRINCIPAL Y ESTE DADO DE BAJA
+
+    }
+
+
     public function actionCreate() {
         $model = new PacienteForm();
         $model->paciente = new Paciente;
         $model->paciente->loadDefaultValues();
         $model->setAttributes(Yii::$app->request->post());
 
-        $valorObrasocial = [];
-        $afiliado = [];
-        $provincias = [];
-        $localidades = [];
-        $obrasociales = [];
-        if (Yii::$app->request->post() && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->paciente->id]);
+        if (Yii::$app->request->post() ) {
+            //Se valida que si se crea un domicilio debe estar como principal, si hay mas, al menos uno debe ser principal
+            if(isset($_POST['Domicilios']) && !$this->validarPrincipal($_POST['Domicilios'])) {
+              return $this->render('create', ['model' => $model]);
+            }
+
+            if($model->save()){
+              //HISTORICO DE DOMICILIOS PRINCIPALES  CREAR EL MODELO PARA GUARDAR!!!!
+              return $this->redirect(['view', 'id' => $model->paciente->id]);
+            }
         }
         else {
-            return $this->render('create', ['model' => $model, 'provincias' => $provincias, 'localidades' => $localidades, 'obrasociales' => $obrasociales, 'valorObrasocial' => $valorObrasocial, 'afiliado' => $afiliado, ]);
+            return $this->render('create', ['model' => $model]);
           }
     }
 
@@ -107,18 +133,18 @@ class PacienteController extends Controller {
         $model = new PacienteForm();
         $model->paciente = $this->findModel($id);
         $model->setAttributes(Yii::$app->request->post());
-        // $model->fecha_nacimiento = date('d/m/Y',strtotime($model->fecha_nacimiento));
-        $valorObrasocial = [];
-        $afiliado = [];
-        $provincias = [];
-        $localidades = [];
-        $obrasociales = [];
-
-        if (Yii::$app->request->post() && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->paciente->id]);
+        if (Yii::$app->request->post() ) {
+            //Se valida que si se crea un domicilio debe estar como principal, si hay mas, al menos uno debe ser principal
+            if(isset($_POST['Domicilios']) && !$this->validarPrincipal($_POST['Domicilios'])) {
+                return $this->render('update', ['model' => $model]);
+            }
+            if($model->save()){
+              //HISTORICO DE DOMICILIOS PRINCIPALES  CREAR EL MODELO PARA GUARDAR!!!!
+               return $this->redirect(['view', 'id' => $model->paciente->id]);
+            }
         }
         else {
-            return $this->render('update', ['model' => $model, 'provincias' => $provincias, 'localidades' => $localidades, 'obrasociales' => $obrasociales, 'valorObrasocial' => $valorObrasocial, 'afiliado' => $afiliado, ]);
+            return $this->render('update', ['model' => $model ,'dom'=>$model->paciente->domicilios ]);
         }
 
     }
@@ -162,6 +188,14 @@ class PacienteController extends Controller {
     public function actionPuco() {
         //fin
         return $this->render('puco');
+    }
+    public function actionPacienteregistro() {
+      ////////////PACIENTE/////////////////
+      $modelPac = new Paciente();
+      $searchModelPac = new PacienteSearch();
+      $dataProviderPac = $searchModelPac->search(Yii::$app->request->queryParams);
+      $dataProviderPac->pagination->pageSize = 7;
+      return $this->render('paciente-registro',[ 'searchModelPac' => $searchModelPac, 'dataProviderPac' => $dataProviderPac, 'modelPac' => $modelPac,   ]);
     }
     /**
      * Finds the Paciente model based on its primary key value.

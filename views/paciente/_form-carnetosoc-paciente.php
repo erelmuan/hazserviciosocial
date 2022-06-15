@@ -40,9 +40,11 @@ use kartik\datecontrol\DateControl;
      </div>
 
     	<div class="col-lg-1">
-         <?= Html::a('<i class="glyphicon glyphicon-trash" ></i> ' , 'javascript:void(0);', [
+         <?= Html::a('<i class="glyphicon glyphicon-trash" ></i> ' , ($carnetOsoc->isNewRecord)?'javascript:void(0);':'', [
            'class' => 'paciente-eliminar-carnetosoc-boton btn btn-danger',
-           'title'=>'Eliminar'
+           'title'=>($carnetOsoc->isNewRecord)?'Eliminar':'NO SE PUEDE ELIMINAR',
+           'disabled'=> ($carnetOsoc->isNewRecord)?false:true
+
             ]) ?>
     	</div>
     </div>

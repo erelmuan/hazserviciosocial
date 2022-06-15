@@ -34,6 +34,7 @@ use kartik\datecontrol\DateControl;
               [
                   'id' => "domicilio-provincia{$key}",
                   'name' => "Domicilios[$key][id_provincia]",
+                  'value'=> 22, //valor por default
                   'prompt'=>'Por favor elija una',
                   'onchange'=>'$.get( "'.Url::toRoute('localidad/arraylocalidades').'", { id: $(this).val() } )
                               .done(function( data ) {
@@ -46,10 +47,11 @@ use kartik\datecontrol\DateControl;
       </div>
    		<div class="col-lg-2">
         <?php echo $form->field($domicilio, 'id_localidad')->dropDownList(
-          ($domicilio->isNewRecord)?array() : $domicilio->getLocalidades($domicilio->provincia->id),
+          ($domicilio->isNewRecord)?$domicilio->getLocalidades(22) : $domicilio->getLocalidades($domicilio->provincia->id),
             [
                'id' => "domicilio-localidad{$key}",
                'name' => "Domicilios[$key][id_localidad]",
+               'value'=> 2845, //valor por default
                 'prompt'=>'Por favor elija uno',
                 'onchange'=>'$.get( "'.Url::toRoute('barrio/arraybarrios').'", { id: $(this).val() } )
                                     .done(function( data ) {
@@ -64,7 +66,7 @@ use kartik\datecontrol\DateControl;
     <div class="col-lg-1">
     <?  if ($domicilio->isNewRecord)
           echo $form->field($domicilio, 'id_barrio')->dropDownList(
-            ($domicilio->isNewRecord)?array() : $domicilio->getBarrios($domicilio->localidad->id),
+            ($domicilio->isNewRecord)?$domicilio->getBarrios(2845) : $domicilio->getBarrios($domicilio->localidad->id),
             ['prompt'=>'Por favor elija una',
           'id' => "domicilio-barrio{$key}",
           'name' => "Domicilios[$key][id_barrio]",
@@ -81,11 +83,16 @@ use kartik\datecontrol\DateControl;
 
 		</div>
     <div class="col-lg-1">
+
         <?=$form->field($domicilio, 'principal')->checkBox([
         'id' => "domicilio-principal{$key}",
         'name' => "Domicilios[$key][principal]",
           'class' =>'form-control',
-          'label' =>false
+          'label' =>false,
+          // 'checked' => '1',
+          // 'value' => '1',
+          'title' =>'Solo debe tener un domicilio principal'
+
 
       ]); ?>
     </div>
@@ -106,9 +113,10 @@ use kartik\datecontrol\DateControl;
     </div>
 
     	<div class="col-lg-1">
-         <?= Html::a('<i class="glyphicon glyphicon-trash" ></i> ' , 'javascript:void(0);', [
+         <?= Html::a('<i class="glyphicon glyphicon-trash" ></i> ' ,($domicilio->isNewRecord)?'javascript:void(0);':'', [
            'class' => 'paciente-eliminar-domicilio-boton btn btn-danger',
-           'title'=>'Eliminar'
+           'title'=>($domicilio->isNewRecord)?'Eliminar':'NO SE PUEDE ELIMINAR',
+           'disabled'=> ($domicilio->isNewRecord)?false:true
             ]) ?>
     	</div>
     </div>

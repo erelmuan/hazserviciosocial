@@ -8,14 +8,7 @@ use yii\helpers\Html;
 <div class="paciente-update">
 
     <?= $this->render('_form', [
-        'model' => $model,
-        'provincias'=> $provincias,
-        'localidades'=> $localidades,
-        'obrasociales'=> $obrasociales,
-        'valorObrasocial'=>$valorObrasocial,
-        'afiliado'=>$afiliado,
-
-
-    ]) ?>
+        'model' => $model
+            ]) ?>
 
 </div>

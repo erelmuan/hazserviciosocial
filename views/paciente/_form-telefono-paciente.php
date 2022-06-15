@@ -16,11 +16,7 @@ use yii\widgets\MaskedInput;
    <div class="row telefono">
      <div class="col-lg-2">
        <?
-     //    $form->field($telefono, 'numero')->textInput([
-     //   'id' => "telefono-numero{$key}",
-     //   'name' => "Telefonos[$key][numero]",
-     //    'class' =>'form-control'
-     // ])->label(false);
+
      echo $form->field($telefono, 'numero')->widget(\yii\widgets\MaskedInput::className(), [
      	'clientOptions' => [
         'name' => 'input-5',
@@ -68,9 +64,11 @@ use yii\widgets\MaskedInput;
     </div>
 
     	<div class="col-lg-1">
-         <?= Html::a('<i class="glyphicon glyphicon-trash" ></i> ' , 'javascript:void(0);', [
+         <?= Html::a('<i class="glyphicon glyphicon-trash" ></i> ' , ($telefono->isNewRecord)?'javascript:void(0);':'', [
            'class' => 'paciente-eliminar-telefono-boton btn btn-danger',
-           'title'=>'Eliminar'
+           'title'=>($telefono->isNewRecord)?'Eliminar':'NO SE PUEDE ELIMINAR',
+           'disabled'=> ($telefono->isNewRecord)?false:true
+
             ]) ?>
     	</div>
     </div>
