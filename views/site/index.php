@@ -47,7 +47,7 @@ $this->title = 'Inicio';
             <div class="icon"><i class="fa fa-table"></i>
             </div>
             <div class="count">8</div>
-            <h3>TABLAS-EXTRAS</h3>
+            <h5>TABLAS-EXTRAS</h5>
             <p>Permisos-cambio de clave-roles.</p>
           </div>
         </div>
@@ -59,20 +59,20 @@ $this->title = 'Inicio';
           </div>
           <div class="count"><?=$cantidadPacientes ?></div>
 
-          <h3>PACIENTES </h3>
+          <h5>PACIENTES </h5>
           <p>Información de los pacientes - ABM.</p>
         </div>
       </div>
       </a>
-      <a href=<?=Yii::$app->homeUrl."?r=solicitud/index&sort=-id"; ?>>
+      <a href=<?=Yii::$app->homeUrl."?r=registroatencion/index&sort=-id"; ?>>
       <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="tile-stats">
           <div class="icon"><i class="fa fa-file-text-o"></i>
           </div>
-          <div class="count"><?=$cantidadSolicitudes ?></div>
+          <div class="count"><?=$cantidadRegistrosatencion ?></div>
 
-          <h3> SOLICITUDES </h3>
-          <p>Información de las solicitudes - ABM.</p>
+          <h5> REGISTROS DE ATENCIONES </h5>
+          <p>Información de las atenciones - ABM.</p>
         </div>
       </div>
       </a>
@@ -84,13 +84,13 @@ $this->title = 'Inicio';
           </div>
           <div class="count">4</div>
 
-          <h3>ADMINISTRACION</h3>
+          <h5>ADMINISTRACION</h5>
           <p>Usuarios-Roles-Modulos-Acciones- ABM.</p>
         </div>
       </div>
     </a>
   <? }  else {  ?>
-      
+
       <a href=<?=Yii::$app->homeUrl."?r=pap"; ?>>
       <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="tile-stats">

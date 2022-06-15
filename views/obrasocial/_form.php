@@ -10,16 +10,19 @@ use yii\widgets\ActiveForm;
 <div class="obrasocial-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <? if($model->carnetOsocs){    ?>
+      <span style="color:red">No se puede modificar sigla ni denominación, debido a que hay una asociación a uno o más registros</span>
+    <? } ?>
 
     <!--si existen pacientes asociados no se puede modificar el sigla  -->
-    <? if($model->carnetOs){
+    <? if($model->carnetOsocs){
             echo  $form->field($model, 'sigla')->input("text",['readonly' => true])->label('Nombre');
           }else {
             echo  $form->field($model, 'sigla')->input("text",['style'=> 'width:100%; text-transform:uppercase;'])->label('Sigla');
         }
     ?>
     <!--si existen pacientes asociados no se puede modificar el denominacion  -->
-    <? if($model->carnetOs){
+    <? if($model->carnetOsocs){
             echo  $form->field($model, 'denominacion')->input("text",['readonly' => true])->label('Nombre');
           }else {
             echo  $form->field($model, 'denominacion')->input("text",['style'=> 'width:100%; text-transform:uppercase;'])->label('Denominación');

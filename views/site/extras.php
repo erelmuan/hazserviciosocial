@@ -75,13 +75,13 @@ $this->title = 'Extras';
       </div>
     </div>
     </a>
-    <a href=<?=Yii::$app->homeUrl."?r=tipoprofesional"; ?>>
+    <a href=<?=Yii::$app->homeUrl."?r=tiporeg"; ?>>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="tile-stats">
           <div class="icon"><i class="fa fa-mortar-board"></i>
           </div>
-          <div class="count"><?=$cantidadTipoProfesional ?></div>
-          <h3>CODIGOS DE ATENCIÓN</h3>
+          <div class="count">2</div>
+          <h3>TIPOS DE REGISTRO</h3>
           <p>Alta-Baja-Modificacion.</p>
       </div>
     </div>
@@ -125,14 +125,14 @@ $this->title = 'Extras';
       </div>
     </div>
     </a>
-    <a href=<?=Yii::$app->homeUrl."?r=estado"; ?>>
+    <a href=<?=Yii::$app->homeUrl."?r=organismo"; ?>>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="tile-stats">
           <div class="icon"><i class="fa fa-dashboard"></i>
           </div>
-          <div class="count"><?=$cantidadEstado ?></div>
-          <h3>BARRIOS</h3>
-          <p>Barrios de la localidad.</p>
+          <div class="count"><?=$cantidadOrganismo ?></div>
+          <h3>ORGANISMO</h3>
+          <p>Organismos.</p>
 
 
       </div>

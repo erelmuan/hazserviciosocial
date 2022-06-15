@@ -12,25 +12,34 @@ use app\models\Paciente;
  */
 class PacienteSearch extends Paciente
 {
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['nombre', 'sexo', 'fecha_nacimiento', 'apellido', 'hc', 'num_documento'], 'safe'],
-            [['id_nacionalidad', 'id_tipodoc', 'id'], 'integer'],
-        ];
-    }
+  public $tipodoc;
+  public $nacionalidad;
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
+  /**
+   * @inheritdoc
+   */
+  public function rules()
+  {
+      return [
+        [['id', 'id_provincia','num_documento', 'id_localidad'], 'integer','except'=>'search'],
+        // SCESNARIO //
+        [['num_documento',],'integer','on'=>'search'],
+        [['num_documento',],'required','on'=>'search'],
+        ['fecha_nacimiento', 'date', 'format' => 'dd/MM/yyyy'],
+
+        // SCESNARIO //
+      [['nacionalidad','tipodoc','nombre', 'apellido',  'hc', 'sexo', 'fecha_nacimiento', 'direccion', 'cp', 'telefono', 'afiliado'], 'safe','except'=>'search'],
+      ];
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public function scenarios()
+  {
+      // bypass scenarios() implementation in the parent class
+      return Model::scenarios();
+  }
 
     /**
      * Creates data provider instance with search query applied
@@ -62,10 +71,10 @@ class PacienteSearch extends Paciente
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'sexo', $this->sexo])
-            ->andFilterWhere(['like', 'apellido', $this->apellido])
-            ->andFilterWhere(['like', 'hc', $this->hc])
+        $query->andFilterWhere(['ilike', 'nombre', $this->nombre])
+            ->andFilterWhere(['ilike', 'sexo', $this->sexo])
+            ->andFilterWhere(['ilike', 'apellido', $this->apellido])
+            ->andFilterWhere(['ilike', 'hc', $this->hc])
             ->andFilterWhere(['like', 'num_documento', $this->num_documento]);
 
         return $dataProvider;

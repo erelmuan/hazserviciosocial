@@ -124,10 +124,10 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                         \yiister\gentelella\widgets\Menu::widget(
                             [
                                 "items" => [
-                                    ["label" => "Inicio", "url" => "index.php", "icon" => "fa fa-home"],
-                                    ["label" => "Pacientes", "url" => ["/paciente"], "icon" => "fa fa-group"],
-                                    ["label" => "Solicitudes", "url" => ["/solicitud/index","sort"=>"-id"], "icon" => "fa fa-file-text-o"],
-                                    ["label" => "Auditoria","url" => ["/pap/index","sort"=>"-id"], "icon" => "fa fa-flask"],
+                                    ["label" => "Inicio", "url" => ["/site/index"], "icon" => "fa fa-home"],
+                                    ["label" => "Pacientes", "url" => ["/paciente/index"], "icon" => "fa fa-group"],
+                                    ["label" => "Registros de Aten.", "url" => ["/registroatencion/index","sort"=>"-id"], "icon" => "fa fa-file-text-o"],
+                                    ["label" => "Auditoria","url" => ["/auditoria/index","sort"=>"-id"], "icon" => "fa fa-book"],
 
 
                                 ],

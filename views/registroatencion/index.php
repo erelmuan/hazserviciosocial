@@ -7,12 +7,10 @@ use johnitvn\ajaxcrud\CrudAsset;
 use johnitvn\ajaxcrud\BulkButtonWidget;
 use kartik\export\ExportMenu;
 use yii\bootstrap\Collapse;
-use kartik\widgets\AlertBlock;
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\PapSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Paps';
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\RegistroatencionSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 echo Collapse::widget([
    'items' => [
        [
@@ -21,6 +19,7 @@ echo Collapse::widget([
        ],
    ]
 ]);
+$this->title = 'Registro de atenciones';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -30,10 +29,10 @@ CrudAsset::register($this);
 $index=0;
 foreach ($columns as $key => $value) {
 
-    if (isset($value["value"])&& $value["value"]=="getlink"){
-      $columns[$index]["value"]=function($dataProvider, $key, $index, $widget) {
+    if (isset($value["value"])&& $value["value"]=="getLink"){
+      $columns[$index]["value"]=function($model, $key, $index, $widget) {
 
-          return Html::a( $dataProvider->solicitudpap->paciente->apellido  .' '.$dataProvider->solicitudpap->paciente->nombre,["paciente/view","id"=> $dataProvider->solicitudpap->paciente->id]
+          return Html::a( $model->paciente->apellido  .' '.$model->paciente->nombre,["paciente/view","id"=> $model->paciente->id]
             ,[    'class' => 'text-success','role'=>'modal-remote','title'=>'Datos del paciente','data-toggle'=>'tooltip']
 
            );
@@ -46,19 +45,14 @@ foreach ($columns as $key => $value) {
 }
 $index=0;
 foreach ($columns as $key => $value) {
-
     if (isset($value["value"])&& $value["value"]=="getLinkdos"){
-      $columns[$index]["value"]=function($dataProvider, $key, $index, $widget) {
-
-          return Html::a( $dataProvider->solicitudpap->medico->apellido  .' '.$dataProvider->solicitudpap->medico->nombre,["medico/view","id"=> $dataProvider->solicitudpap->medico->id]
-            ,[    'class' => 'text-success','role'=>'modal-remote','title'=>'Datos del medico','data-toggle'=>'tooltip']
-
+      $columns[$index]["value"]=function($model, $key, $index, $widget) {
+          return Html::a( $model->organismo->nombre ,["organismo/view","id"=> $model->organismo->id]
+            ,[    'class' => 'text-success','role'=>'modal-remote','title'=>'Datos del organismo','data-toggle'=>'tooltip']
            );
-
          };
-
     }
-    $index ++;
+  $index ++;
 
 }
   $export= ExportMenu::widget([
@@ -93,26 +87,20 @@ $columns[]=
             ]
     ];
 
-    if (Yii::$app->session->hasFlash('error')) {
-      echo AlertBlock::widget([
-                      'useSessionFlash' => true,
-                      'type' => AlertBlock::TYPE_ALERT
-                  ]);
-    }?>
 
+?>
 
-<div id="w0pap" class="x_panel">
-  <div class="x_title"><h2><i class="fa fa-table"></i> PAPS  </h2>
+<div  class="x_panel">
+  <div class="x_title"><h2><i class="fa fa-table"></i> Registros de atenciones  </h2>
     <div class="clearfix"> <div class="nav navbar-right panel_toolbox"><?= Html::a('<i class="glyphicon glyphicon-arrow-left"></i> Atrás', ['/site'], ['class'=>'btn btn-danger grid-button']) ?></div>
 </div>
   </div>
 <p>
-  <?  if (Yii::$app->user->identity->id_pantalla==2 ){
-      echo Html::a('Nuevo Pap', "?r=solicitudpap/seleccionar", ['class' => 'btn btn-success']);
-    } ?>
+  <?  echo Html::a('Nuevo registro', "?r=registroatencion/create", ['class' => 'btn btn-success']);
+ ?>
 </p>
 <?=$export; ?>
-<div class="pap-index">
+<div class="registroatencion-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
@@ -136,7 +124,7 @@ $columns[]=
             'responsiveWrap' => false,
             'panel' => [
                 'type' => 'primary',
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Lista de paps',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Lista de registros',
                 'before'=>'<em>* Para buscar algún registro tipear en el filtro y presionar ENTER </em>',
 
                         '<div class="clearfix"></div>',
@@ -145,8 +133,6 @@ $columns[]=
     </div>
 </div>
 </div>
-</div>
-
 <?php Modal::begin([
     "id"=>"ajaxCrudModal",
     "footer"=>"",// always need it for jquery plugin

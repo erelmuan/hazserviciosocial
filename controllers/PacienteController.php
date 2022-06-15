@@ -30,9 +30,7 @@ class PacienteController extends Controller {
         $searchModelPac->scenario = "search";
         $request = Yii::$app->request;
         if ($request->isAjax) {
-            $searchModelPac->load(\Yii::$app
-                ->request
-                ->get());
+            $searchModelPac->load(\Yii::$app->request->get());
             if ($searchModelPac->validate()) {
                 $dataProviderPac = $searchModelPac->search(\Yii::$app
                     ->request
@@ -89,9 +87,6 @@ class PacienteController extends Controller {
         $localidades = [];
         $obrasociales = [];
         if (Yii::$app->request->post() && $model->save()) {
-            // if (isset($_POST['id_obrasocial'])) {
-            //     CarnetOsocController::createParametros($model->id, $_POST['id_obrasocial'], $_POST['nroafiliado']);
-            // }
             return $this->redirect(['view', 'id' => $model->paciente->id]);
         }
         else {
@@ -119,19 +114,12 @@ class PacienteController extends Controller {
         $localidades = [];
         $obrasociales = [];
 
-            if (Yii::$app->request->post() && $model->save()) {
-                // $obraSocial = [];
-                // $nroAfiliado = [];
-                // if (isset($_POST['id_obrasocial'])) {
-                //     $obraSocial = $_POST['id_obrasocial'];
-                //     $nroAfiliado = $_POST['nroafiliado'];
-                // }
-                // CarnetOsocController::updateParametros($model->paciente->id, $obraSocial, $nroAfiliado);
-                return $this->redirect(['view', 'id' => $model->paciente->id]);
-            }
-            else {
-                return $this->render('update', ['model' => $model, 'provincias' => $provincias, 'localidades' => $localidades, 'obrasociales' => $obrasociales, 'valorObrasocial' => $valorObrasocial, 'afiliado' => $afiliado, ]);
-            }
+        if (Yii::$app->request->post() && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->paciente->id]);
+        }
+        else {
+            return $this->render('update', ['model' => $model, 'provincias' => $provincias, 'localidades' => $localidades, 'obrasociales' => $obrasociales, 'valorObrasocial' => $valorObrasocial, 'afiliado' => $afiliado, ]);
+        }
 
     }
     /**

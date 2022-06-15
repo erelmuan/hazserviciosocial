@@ -19,7 +19,14 @@ use app\models\CarnetOsoc;
 
 
 <div id="w0" class="x_panel">
-
+    <div class="x_title">
+        <h2> <?=$model->paciente->isNewRecord ? "<i class='glyphicon glyphicon-plus'></i> NUEVO PACIENTE" : "<i class='glyphicon glyphicon-pencil'></i> ACTUALIZAR PACIENTE" ; ?>
+        </h2>
+        <div class="clearfix">
+            <div class="nav navbar-right panel_toolbox">
+                <?=Html::button('<i class="glyphicon glyphicon-arrow-left"></i> Atrás',array('name' => 'btnBack','onclick'=>'js:history.go(-1);returnFalse;','id'=>'botonAtras')); ?>
+        </div>
+</div>
 <div class="paciente-form">
 
     <?php $form = ActiveForm::begin(); ?>
@@ -86,7 +93,7 @@ use app\models\CarnetOsoc;
         //Boton para insertar nuevo formulario de domicilio
         echo Html::a('<i class="glyphicon glyphicon-plus" ></i>', 'javascript:void(0);', [
            'id' => 'paciente-nuevo-domicilio-boton',
-           'class' => 'btn btn-success btn-md'
+           'class' => 'btn btn-primary btn-md'
          ])
          ?>
          <b>NUEVO DOMICILIO</b>
@@ -114,9 +121,14 @@ use app\models\CarnetOsoc;
         Localidad
         </label>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-1">
         <label class="control-label">
         Barrio
+        </label>
+      </div>
+      <div class="col-lg-1">
+        <label class="control-label">
+        Principal
         </label>
       </div>
       <div class="col-lg-2">
@@ -124,6 +136,7 @@ use app\models\CarnetOsoc;
         Fecha de baja
         </label>
       </div>
+
       <div class="col-lg-1"></div>
     </div>
   </div>
@@ -166,7 +179,7 @@ use app\models\CarnetOsoc;
           //Boton para insertar nuevo formulario de telgono
           echo Html::a('<i class="glyphicon glyphicon-plus" ></i>', 'javascript:void(0);', [
              'id' => 'paciente-nuevo-telefono-boton',
-             'class' => 'btn btn-success btn-md'
+             'class' => 'btn btn-primary btn-md'
            ])
            ?>
       <b>NUEVO TELÉFONO</b>
@@ -236,7 +249,7 @@ use app\models\CarnetOsoc;
           //Boton para insertar nuevo formulario de correo
           echo Html::a('<i class="glyphicon glyphicon-plus" ></i>', 'javascript:void(0);', [
              'id' => 'paciente-nuevo-correo-boton',
-             'class' => 'btn btn-success btn-md'
+             'class' => 'btn btn-primary btn-md'
            ])
            ?>
        <b>NUEVO CORREO</b>
@@ -299,7 +312,7 @@ use app\models\CarnetOsoc;
           //Boton para insertar nueva formulario obrasocial
           echo Html::a('<i class="glyphicon glyphicon-plus" ></i>', 'javascript:void(0);', [
              'id' => 'paciente-nuevo-carnetosoc-boton',
-             'class' => 'btn btn-success btn-md'
+             'class' => 'btn btn-primary btn-md'
            ])
            ?>
 

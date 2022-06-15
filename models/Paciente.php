@@ -23,7 +23,7 @@ use Yii;
  * @property Domicilio[] $domicilios
  * @property Nacionalidad $nacionalidad
  * @property Tipodoc $tipodoc
- * @property Solicitud[] $solicituds
+* @property Registroatencion[] $registroatencions
  * @property Solicitudbiopsia[] $solicitudbiopsias
  * @property Solicitudpap[] $solicitudpaps
  * @property Telefono[] $telefonos
@@ -51,6 +51,8 @@ class Paciente extends \yii\db\ActiveRecord
             [['id_nacionalidad', 'id_tipodoc'], 'integer'],
             [['nombre'], 'string', 'max' => 50],
             [['apellido'], 'string', 'max' => 60],
+            [['id_nacionalidad', 'id_tipodoc', 'id_localidad', 'id_provincia'], 'default', 'value' => null],
+            [['id_nacionalidad', 'id_tipodoc', 'id_localidad', 'id_provincia'], 'integer'],
             [['id_tipodoc', 'num_documento'], 'unique', 'targetAttribute' => ['id_tipodoc', 'num_documento']],
             [['id_nacionalidad'], 'exist', 'skipOnError' => true, 'targetClass' => Nacionalidad::className(), 'targetAttribute' => ['id_nacionalidad' => 'id']],
             [['id_tipodoc'], 'exist', 'skipOnError' => true, 'targetClass' => Tipodoc::className(), 'targetAttribute' => ['id_tipodoc' => 'id']],
@@ -72,6 +74,8 @@ class Paciente extends \yii\db\ActiveRecord
             'id_tipodoc' => 'Id Tipodoc',
             'id' => 'ID',
             'num_documento' => 'Num Documento',
+            'id_localidad' => 'Id Localidad',
+            'id_provincia' => 'Id Provincia',
         ];
     }
 
@@ -130,5 +134,16 @@ class Paciente extends \yii\db\ActiveRecord
     {
         return ArrayHelper::map(Nacionalidad::find()->all(), 'id','gentilicio');
     }
-
+    /**
+       * @return \yii\db\ActiveQuery
+       */
+      public function getRegistroatencions()
+      {
+          return $this->hasMany(Registroatencion::className(), ['id_paciente' => 'id']);
+      }
+    public function getDomicilio()
+    {
+      //CORREGIR DEVOLVER SOLO AQUELLOS DOMICILIO MARCADOS COMO PRINCIPAL
+       return $this->hasOne(Domicilio::className(), ['id_paciente' => 'id']);
+    }
 }

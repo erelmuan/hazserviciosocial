@@ -40,46 +40,17 @@ return [
 
       ]
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Direccion',
-    // ],
+
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'localidad',
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'CP',
-    // ],
+
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'telefono',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'email',
-    ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Afiliado',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'OS',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Plan',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Notas',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'Ult_Fecha',
-    // ],
+
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

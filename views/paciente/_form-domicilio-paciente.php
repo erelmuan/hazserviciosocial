@@ -17,7 +17,7 @@ use kartik\datecontrol\DateControl;
        'id' => "domicilio-direccion{$key}",
        'name' => "Domicilios[$key][direccion]",
         'class' =>'form-control'
-     ])->label(false) ?>
+     ])->label(false); ?>
      </div>
      <div class="col-lg-1">
        <?= $form->field($domicilio, 'id_tipodom')->dropDownList(
@@ -61,7 +61,7 @@ use kartik\datecontrol\DateControl;
         )->label(false); ?>
 
 		</div>
-    <div class="col-lg-2">
+    <div class="col-lg-1">
     <?  if ($domicilio->isNewRecord)
           echo $form->field($domicilio, 'id_barrio')->dropDownList(
             ($domicilio->isNewRecord)?array() : $domicilio->getBarrios($domicilio->localidad->id),
@@ -80,6 +80,15 @@ use kartik\datecontrol\DateControl;
 
 
 		</div>
+    <div class="col-lg-1">
+        <?=$form->field($domicilio, 'principal')->checkBox([
+        'id' => "domicilio-principal{$key}",
+        'name' => "Domicilios[$key][principal]",
+          'class' =>'form-control',
+          'label' =>false
+
+      ]); ?>
+    </div>
     <div class="col-lg-2">
     <?=$form->field($domicilio, 'fecha_baja')
       ->widget(DateControl::classname(), [

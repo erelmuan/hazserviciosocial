@@ -9,32 +9,23 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 //modelos
 use app\models\Paciente;
-use app\models\Solicitud;
 use app\models\Medico;
 use app\models\Procedencia;
 use app\models\Provincia;
 use app\models\Localidad;
-use app\models\Plantilladiagnostico;
-use app\models\Plantillamicroscopia;
-use app\models\Plantillamacroscopia;
-use app\models\Plantillamaterial;
-use app\models\Plantillafrase;
-use app\models\Plantillaflora;
-use app\models\Plantillapavimentosa;
-use app\models\Plantillaglandular;
-use app\models\Plantillaaspecto;
-use app\models\Plantilladiagnosticop;
 use app\models\Usuario;
 use app\models\Auditoria;
 use app\models\Rol;
 use app\models\Modulo;
 use app\models\Accion;
-use app\models\Firma;
+use app\models\Barrio;
 use app\models\Tipoprofesional;
 use app\models\Obrasocial;
 use app\models\Nacionalidad;
 use app\models\Tipodoc;
-use app\models\Estado;
+use app\models\Registroatencion;
+use app\models\Organismo;
+
 use app\components\Seguridad\Seguridad;
 class SiteController extends Controller {
     /**
@@ -74,11 +65,11 @@ class SiteController extends Controller {
      * @return string
      */
     public function actionIndex() {
-        $cantidadSolicitudes = Solicitud::find()->count();
+        $cantidadRegistrosatencion = Registroatencion::find()->count();
         $cantidadPacientes = Paciente::find()->count();
         $cantidadProcedencia = Procedencia::find()->count();
         $cantidadMedicos = Medico::find()->count();
-        return $this->render('index', [ 'cantidadSolicitudes' => $cantidadSolicitudes,  'cantidadPacientes' => $cantidadPacientes, 'cantidadProcedencia' => $cantidadProcedencia, 'cantidadMedicos' => $cantidadMedicos, ]);
+        return $this->render('index', [ 'cantidadRegistrosatencion' => $cantidadRegistrosatencion,  'cantidadPacientes' => $cantidadPacientes, 'cantidadProcedencia' => $cantidadProcedencia, 'cantidadMedicos' => $cantidadMedicos, ]);
     }
     /**
      * Login action.
@@ -164,12 +155,13 @@ class SiteController extends Controller {
         $cantidadProcedencia = Procedencia::find()->count();
         $cantidadProvincia = Provincia::find()->count();
         $cantidadLocalidad = Localidad::find()->count();
-        $cantidadTipoProfesional = Tipoprofesional::find()->count();
         $cantidadObrasocial = Obrasocial::find()->count();
         $cantidadNacionalidad = Nacionalidad::find()->count();
         $cantidadTipoDoc = Tipodoc::find()->count();
-        $cantidadEstado = Estado::find()->count();
-        return $this->render('extras', ['cantidadProcedencia' => $cantidadProcedencia, 'cantidadProvincia' => $cantidadProvincia, 'cantidadLocalidad' => $cantidadLocalidad, 'cantidadTipoProfesional' => $cantidadTipoProfesional, 'cantidadObrasocial' => $cantidadObrasocial, 'cantidadNacionalidad' => $cantidadNacionalidad, 'cantidadTipoDoc' => $cantidadTipoDoc, 'cantidadEstado' => $cantidadEstado, ]);
+        $cantidadOrganismo = Organismo::find()->count();
+        $cantidadBarrio = Barrio::find()->count();
+
+        return $this->render('extras', ['cantidadProcedencia' => $cantidadProcedencia, 'cantidadProvincia' => $cantidadProvincia, 'cantidadLocalidad' => $cantidadLocalidad, 'cantidadBarrio' => $cantidadBarrio, 'cantidadObrasocial' => $cantidadObrasocial, 'cantidadNacionalidad' => $cantidadNacionalidad, 'cantidadTipoDoc' => $cantidadTipoDoc, 'cantidadOrganismo' => $cantidadOrganismo, ]);
     }
     public function actionPlantillasbiopsias() {
         $cantidadPlantillaDiag = Plantilladiagnostico::find()->count();

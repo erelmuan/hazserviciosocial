@@ -10,6 +10,9 @@ use yii\widgets\ActiveForm;
 <div class="tipodoc-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <? if(!$model->isNewRecord && $model->pacientes){  ?>
+      <span style="color:red">No se puede modificar el documento, debido a que hay una asociación a uno o más registros</span>
+    <? } ?>
     <!--si existen pacientes asociados no se puede modificar el nombre  -->
     <? if($model->pacientes){
             echo  $form->field($model, 'documento')->input("text",['readonly' => true])->label('Documento');
