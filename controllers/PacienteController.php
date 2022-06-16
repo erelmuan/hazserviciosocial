@@ -50,9 +50,7 @@ class PacienteController extends Controller {
      */
     public function actionIndex() {
         $searchModel = new PacienteSearch();
-        $dataProvider = $searchModel->search(Yii::$app
-            ->request
-            ->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, ]);
     }
     /**
@@ -111,8 +109,12 @@ class PacienteController extends Controller {
             }
 
             if($model->save()){
-              //HISTORICO DE DOMICILIOS PRINCIPALES  CREAR EL MODELO PARA GUARDAR!!!!
-              return $this->redirect(['view', 'id' => $model->paciente->id]);
+              //Si elegimos en el formulario la opcion de "crear e ir al registro"
+              if($_POST['registro']){
+                return $this->redirect(['registroatencion/create', 'id' => $model->paciente->id]);
+              }else {
+                return $this->redirect(['view', 'id' => $model->paciente->id]);
+              }
             }
         }
         else {
@@ -129,7 +131,6 @@ class PacienteController extends Controller {
      * @return mixed
      */
     public function actionUpdate($id) {
-
         $model = new PacienteForm();
         $model->paciente = $this->findModel($id);
         $model->setAttributes(Yii::$app->request->post());
@@ -139,12 +140,15 @@ class PacienteController extends Controller {
                 return $this->render('update', ['model' => $model]);
             }
             if($model->save()){
-              //HISTORICO DE DOMICILIOS PRINCIPALES  CREAR EL MODELO PARA GUARDAR!!!!
-               return $this->redirect(['view', 'id' => $model->paciente->id]);
+              if($_POST['registro']==1){
+                return $this->redirect(['registroatencion/create', 'id_paciente' => $model->paciente->id]);
+              }else {
+                return $this->redirect(['view', 'id' => $model->paciente->id]);
+              }
             }
         }
         else {
-            return $this->render('update', ['model' => $model ,'dom'=>$model->paciente->domicilios ]);
+            return $this->render('update', ['model' => $model  ]);
         }
 
     }
@@ -191,11 +195,12 @@ class PacienteController extends Controller {
     }
     public function actionPacienteregistro() {
       ////////////PACIENTE/////////////////
-      $modelPac = new Paciente();
-      $searchModelPac = new PacienteSearch();
-      $dataProviderPac = $searchModelPac->search(Yii::$app->request->queryParams);
-      $dataProviderPac->pagination->pageSize = 7;
-      return $this->render('paciente-registro',[ 'searchModelPac' => $searchModelPac, 'dataProviderPac' => $dataProviderPac, 'modelPac' => $modelPac,   ]);
+      $model = new PacienteForm();
+      $model->paciente = new Paciente;
+      $searchModel = new PacienteSearch();
+      $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+      $dataProvider->pagination->pageSize = 7;
+      return $this->render('paciente-registro',[ 'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'model' => $model,   ]);
     }
     /**
      * Finds the Paciente model based on its primary key value.

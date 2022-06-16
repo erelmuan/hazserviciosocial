@@ -26,7 +26,7 @@ use app\models\CarnetOsoc;
             <div class="nav navbar-right panel_toolbox">
                 <?=Html::button('<i class="glyphicon glyphicon-arrow-left"></i> Atrás',array('name' => 'btnBack','onclick'=>'js:history.go(-1);returnFalse;','id'=>'botonAtras')); ?>
         </div>
-</div>
+      </div>
 <div class="paciente-form">
 
     <?php $form = ActiveForm::begin(); ?>
@@ -423,8 +423,10 @@ use app\models\CarnetOsoc;
 
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->paciente->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->paciente->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	    </div>
+	        <?= Html::submitButton($model->paciente->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->paciente->isNewRecord ? 'btn btn-success' : 'btn btn-primary','value'=>0,'name' => 'registro']) ?>
+          <?= Html::submitButton($model->paciente->isNewRecord ? 'Crear y Cargar Registro' : 'Actualizar y Cargar Registro', ['class' => $model->paciente->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'value'=>1,'name' => 'registro']) ?>
+
+      </div>
 	<?php } ?>
 
     <?php ActiveForm::end(); ?>

@@ -10,5 +10,6 @@ use yii\helpers\Html;
 <div class="registroatencion-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'paciente'=>$paciente,
     ]) ?>
 </div>

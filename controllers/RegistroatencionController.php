@@ -87,30 +87,20 @@ class RegistroatencionController extends Controller
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-     public function actionCreate() {
-
+     public function actionCreate($id_paciente=NULL) {
          $request = Yii::$app->request;
          $model = new Registroatencion();
          ////////////PACIENTE/////////////////
-         $modelPac = new Paciente();
-         $searchModelPac = new PacienteSearch();
-         $dataProviderPac = $searchModelPac->search(Yii::$app->request->queryParams);
-         $dataProviderPac->pagination->pageSize = 7;
-
-         /*
-          *   Process for non-ajax request
-         */
+         $modelpaciente = new Paciente();
+         $paciente= Paciente::findOne($id_paciente);
+         //HISTORICO DE DOMICILIOS PRINCIPALES  CREAR EL MODELO PARA GUARDAR!!!!
          if ($this->request->isPost) {
              if ($model->load($request->post()) && $model->save()) {
                  return $this->redirect(['view', 'id' => $model->id]);
              }
-             else {
-                 return $this->render('_form', ['model' => $model, 'searchModelPac' => $searchModelPac, 'dataProviderPac' => $dataProviderPac, 'modelPac' => $modelPac,   ]);
-             }
          }
-         else {
-                return $this->render('_form', ['model' => $model, 'searchModelPac' => $searchModelPac, 'dataProviderPac' => $dataProviderPac, 'modelPac' => $modelPac,  ]);
-         }
+            return $this->render('_form', ['model' => $model, 'paciente' => $paciente ]);
+
      }
 
 
@@ -130,6 +120,7 @@ class RegistroatencionController extends Controller
         $searchModelPac = new PacienteSearch();
         $dataProviderPac = $searchModelPac->search(Yii::$app->request->queryParams);
         $dataProviderPac->pagination->pageSize = 7;
+        //HISTORICO DE DOMICILIOS PRINCIPALES  CREAR EL MODELO PARA GUARDAR!!!!
 
         if ($model->load($request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_paciente]);

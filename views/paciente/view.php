@@ -24,26 +24,80 @@ use yii\widgets\DetailView;
             'label'=> 'Nacionalidad',
            ],
             'fecha_nacimiento',
+            // 'email',
+            [
+                'label' => 'Domicilio',
+                  'format'    => 'html',
+                  'value'     => call_user_func(function($model)
+                  {
+                      $items = "";
+                      $num=1;
+                      foreach ($model->domicilios as $domicilio) {
+                          $items .="<u><b>DOMICILIO</b> </u> ".$num."<br>";
+                          $items .="<b>Dirección:</b>". $domicilio->direccion."<br>
+                                  <b>Tipo</b>: ".$domicilio->tipodom->descripcion."<br>
+                                  <b>Provincia</b>: ".$domicilio->provincia->nombre."<br>
+                                  <b>Localidad</b>: ".$domicilio->localidad->nombre."<br>
+                                  <b>Barrio</b>: ".$domicilio->barrio->nombre."<br>
+                                  <b>Principal</b>: ".($domicilio->principal?"SI":"NO")."<br>";
 
-          'direccion',
-          'cp',
-          'telefono',
-          'email',
+                            $num ++;
 
+                      }
+                      return $items;
+                  }, $model)
+            ],
+            [
+                'label' => 'Telefono',
+                  'format'    => 'html',
+                  'value'     => call_user_func(function($model)
+                  {
+                      $items = "";
+                      $num=1;
+                      foreach ($model->telefonos as $telefono) {
+                          $items .="<u><b>Telefono</b> </u> ".$num."<br>";
+                          $items .="<b>Numero:</b> ". $telefono->numero."<br>
+                                  <b>Tipo</b>: ".$telefono->tipotel->descripcion."<br>";
+                            $num ++;
 
-          [
-            'attribute' => 'Obra social',
-                'format'    => 'html',
-                'value'     => call_user_func(function($model)
-                {
-                    $items = "";
-                    foreach ($model->carnetOsocs as $carnet) {
-                        $items .= $carnet->obrasocial->denominacion."<br> N° Afiliado: ".$carnet->nroafiliado."<br>";
+                      }
+                      return $items;
+                  }, $model)
+            ],
 
-                    }
-                    return $items;
-                }, $model)
-         ],
+            [
+                  'label' => 'Obra social',
+                  'format'    => 'html',
+                  'value'     => call_user_func(function($model)
+                  {
+                      $items = "";
+                      $num=1;
+                      foreach ($model->carnetOsocs as $carnet) {
+                          $items .="<u><b>Obra sociales</b> </u> ".$num."<br>";
+                          $items .= "<b>Denominación:</b> ".$carnet->obrasocial->denominacion."<br>
+                          <b>Nº Afiliado:</b> ". $carnet->nroafiliado."<br>";
+                          $num ++;
+
+                      }
+                      return $items;
+                  }, $model)
+           ],
+           [
+               'label' => 'Correo',
+                 'format'    => 'html',
+                 'value'     => call_user_func(function($model)
+                 {
+                     $items = "";
+                     $num=1;
+                     foreach ($model->correos as $correo) {
+                         $items .="<u><b>Correo</b> </u> ".$num."<br>";
+                         $items .="<b>Dirección:</b> ". $correo->direccion."<br>";                           $num ++;
+
+                     }
+                     return $items;
+                 }, $model)
+           ],
+
         ],
     ]) ?>
 

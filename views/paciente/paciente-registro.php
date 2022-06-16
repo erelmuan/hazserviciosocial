@@ -46,9 +46,7 @@ CrudAsset::register($this);
           ?>
           <div class='col-sm-3'>
             <label >Paciente: <span id='paciente'> </span>
-              <button onclick="quitarSeleccion()"  title="Busqueda avanzada de paciente" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".bs-paciente-modal-lg" style="margin-left: 10px;"><i class="glyphicon glyphicon-search" ></i></button>
-              <?   echo  Html::a('<i class="glyphicon glyphicon-plus"> Crear paciente</i>', ['paciente/create'],
-               ["target"=>"_blank",'title'=> 'Crear nuevo paciente','class'=>'btn btn-primary btn-xs']); ?>
+              <button onclick="quitarSeleccion()"  title="Busqueda avanzada de paciente" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".bs-paciente-modal-lg" style="margin-left: 10px;"><i class="glyphicon glyphicon-search" > Busqueda avanzada</i></button>
             </label>
               <input type="text" id="pacientebuscar" name="PacienteSearch[num_documento]"  placeholder="Ingresar DNI del paciente" >
               <button id="button_paciente" type="button" class ="btn btn-primary btn-xs" onclick='pacienteba();'>Buscar y añadir</button>
@@ -73,8 +71,8 @@ CrudAsset::register($this);
                            <div id="ajaxCrudDatatable">
                              <?=GridView::widget([
                                  'id'=>'crud-paciente',
-                                 'dataProvider' => $dataProviderPac,
-                                 'filterModel' => $searchModelPac,
+                                 'dataProvider' => $dataProvider,
+                                 'filterModel' => $searchModel,
                                  'pjax'=>true,
                                  'columns' => require(__DIR__.'/_columnsPaciente.php'),
                                  'toolbar'=> [
@@ -108,6 +106,10 @@ CrudAsset::register($this);
 
     </div>
    </div>
+
+   <?= $this->render('_form', [
+       'model' => $model,
+   ]) ?>
 
 <?php Modal::begin([
     "id"=>"ajaxCrudModal",
