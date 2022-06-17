@@ -6,9 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Paciente */
 ?>
 <div class="paciente-update">
-
     <?= $this->render('_form', [
         'model' => $model
             ]) ?>
-
 </div>

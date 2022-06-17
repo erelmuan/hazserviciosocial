@@ -55,7 +55,7 @@ use yii\widgets\DetailView;
                       $items = "";
                       $num=1;
                       foreach ($model->telefonos as $telefono) {
-                          $items .="<u><b>Telefono</b> </u> ".$num."<br>";
+                          $items .="<u><b>TELEFONO</b> </u> ".$num."<br>";
                           $items .="<b>Numero:</b> ". $telefono->numero."<br>
                                   <b>Tipo</b>: ".$telefono->tipotel->descripcion."<br>";
                             $num ++;
@@ -73,7 +73,7 @@ use yii\widgets\DetailView;
                       $items = "";
                       $num=1;
                       foreach ($model->carnetOsocs as $carnet) {
-                          $items .="<u><b>Obra sociales</b> </u> ".$num."<br>";
+                          $items .="<u><b>OBRA SOCIAL</b> </u> ".$num."<br>";
                           $items .= "<b>Denominación:</b> ".$carnet->obrasocial->denominacion."<br>
                           <b>Nº Afiliado:</b> ". $carnet->nroafiliado."<br>";
                           $num ++;
@@ -90,7 +90,7 @@ use yii\widgets\DetailView;
                      $items = "";
                      $num=1;
                      foreach ($model->correos as $correo) {
-                         $items .="<u><b>Correo</b> </u> ".$num."<br>";
+                         $items .="<u><b>CORREO</b> </u> ".$num."<br>";
                          $items .="<b>Dirección:</b> ". $correo->direccion."<br>";                           $num ++;
 
                      }

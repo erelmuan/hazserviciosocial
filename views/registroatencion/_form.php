@@ -52,7 +52,7 @@ CrudAsset::register($this);
           <div class='col-sm-3'>
             <label> Paciente </label></br>
             <input id="registroatencion-paciente" class="form-control"  style="width:250px;" value='<?=($paciente)?$paciente->apellido.", ".$paciente->nombre:''; ?>' type="text" readonly>
-            <?=$form->field($paciente, 'id')->hiddenInput()->label(false);
+            <?=$form->field($paciente, 'id')->hiddenInput(['name'=>"Registroatencion[id_paciente]"])->label(false);
             echo $form->field($model, 'id_tiporeg')->widget(
               Chosen::className(), [
                'items' => $maptiporeg,
@@ -92,17 +92,14 @@ CrudAsset::register($this);
 
             </div>
           </div>
+          <?  if (!Yii::$app->request->isAjax){ ?>
+             <div class='pull-right'>
+                <?=Html::submitButton($model->isNewRecord ? 'Guardar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary','disabled'=>(isset($model->usuario) && ($model->usuario->id !== Yii::$app->user->identity->id ))]); ?>
+             </div>
+          <? }
+              $form = ActiveForm::end();
+          ?>
           </div>
-
-
-
-      <?  if (!Yii::$app->request->isAjax){ ?>
-         <div class='pull-right'>
-            <?=Html::submitButton($model->isNewRecord ? 'Guardar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary','disabled'=>(isset($model->usuario) && ($model->usuario->id !== Yii::$app->user->identity->id ))]); ?>
-         </div>
-      <? }
-          $form = ActiveForm::end();
-      ?>
 
     </div>
    </div>

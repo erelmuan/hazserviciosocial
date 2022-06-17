@@ -69,7 +69,7 @@ class RegistroatencionController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
                     'title'=> "Registro de atención #".$id,
-                    'content'=>$this->renderAjax('view', [
+                    'content'=>$this->renderAjax('_detalleview', [
                         'model' => $this->findModel($id),
                     ]),
                     'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"])
@@ -116,16 +116,13 @@ class RegistroatencionController extends Controller
         $request = Yii::$app->request;
         $model = $this->findModel($id);
         ////////////PACIENTE/////////////////
-        $modelPac = new Paciente();
-        $searchModelPac = new PacienteSearch();
-        $dataProviderPac = $searchModelPac->search(Yii::$app->request->queryParams);
-        $dataProviderPac->pagination->pageSize = 7;
+        $paciente= Paciente::findOne($model->id_paciente);
         //HISTORICO DE DOMICILIOS PRINCIPALES  CREAR EL MODELO PARA GUARDAR!!!!
 
         if ($model->load($request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_paciente]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-          return $this->render('_form', ['model' => $model, 'searchModelPac' => $searchModelPac, 'dataProviderPac' => $dataProviderPac, 'modelPac' => $modelPac,   ]);
+          return $this->render('_form', ['model' => $model, 'paciente' => $paciente  ]);
         }
 
     }

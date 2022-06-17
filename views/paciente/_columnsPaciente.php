@@ -1,11 +1,10 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 return [
-    [
-        'class' => '\kartik\grid\RadioColumn',
-        'width' => '20px',
-    ],
+
+
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id',
@@ -28,7 +27,6 @@ return [
         'attribute'=>'sexo',
     ],
     [
-      //nombre
       'class'=>'\kartik\grid\DataColumn',
       'attribute'=>'fecha_nacimiento',
       'label'=> 'Fecha de nacimiento',
@@ -44,7 +42,34 @@ return [
 
       ]
     ],
-    
+    [
+      'class' => 'kartik\grid\ActionColumn',
+
+      'dropdown' => false,
+      'vAlign'=>'middle',
+      'urlCreator' => function($action, $model, $key, $index) {
+              return Url::to([$action,'id'=>$key]);
+      },
+      'template'=> '{fos}',
+      'buttons'=> [
+        'fos' => function ($url, $model, $key) {
+             return
+             //  Html::a(
+             // '<span class="glyphicon glyphicon-list-alt">Planilla</span>', ['thturno/fos', 'id' => $key], ['class' => 'profile-link','target'=>'_blank','title'=>"Planilla FOS"]) ;
+             // },
+             Html::a('<i class="glyphicon glyphicon-copy"></i> Seleccionar paciente', ['/paciente/update', 'id' => $model->id], [
+                  'class'=>'btn btn-primary',
+                  // 'role'=>'modal-remote',
+                  // 'target'=>'_blank',
+                  'data-toggle'=>'tooltip',
+                  'title'=>'Se añadira el paciente al registro de atención'
+              ]);
+             },
+           ],
+      'updateOptions'=>['title'=>'Actualizar', 'data-toggle'=>'tooltip','icon'=>"<button class='btn-primary btn-circle'><span class='glyphicon glyphicon-pencil'></span></button>"],
+
+   ],
+
 
 
 ];

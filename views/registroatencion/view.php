@@ -1,40 +1,22 @@
 <?php
 
-use yii\widgets\DetailView;
+use yii\helpers\Html;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Registroatencion */
 ?>
 <div class="registroatencion-view">
+  <div class="biopsia-view">
+      <div id="w0s" class="x_panel">
+        <div class="x_title"><h2><i class="fa fa-table"></i> REGISTRO DE ATENCIÓN  </h2>
+          <div class="clearfix"> <div class="nav navbar-right panel_toolbox"><?= Html::a('<i class="glyphicon glyphicon-arrow-left"></i> Ir a Registros', ['/registroatencion/index'], ['class'=>'btn btn-danger grid-button']) ?></div>
+      </div>
+        </div>
+        <?= $this->render('_detalleview', [
+            'model' => $model,
+        ]) ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            [
-              'value'=> $model->paciente->apellido .' '.$model->paciente->nombre,
-              'label'=> 'Paciente',
-            ],
-            'motivo',
-            [
-              'value'=> $model->tiporeg->descripcion,
-              'label'=> 'Tipo de registro',
-            ],
-            [
-              'value'=> $model->organismo->nombre,
-              'label'=> 'Organismo',
-            ],
-            [
-            'label'=> 'Fecha',
-            'value'=> $model->fecha ,
-            'format' => ['date', 'd/M/Y'],
-              ],
-            'numero_nota',
-            [
-              'value'=> $model->usuario->nombre,
-              'label'=> 'Usuario',
-            ],
-        ],
-    ]) ?>
-
+</div>
+</div>
 </div>

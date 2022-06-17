@@ -25,9 +25,7 @@ CrudAsset::register($this);
 
 <div class="paciente-index">
     <div id="ajaxCrudDatatable">
-
         <?=GridView::widget([
-
             'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
@@ -43,10 +41,7 @@ CrudAsset::register($this);
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Refrescar'])//.
                 ],
                    'exportContainer' => ['class' => 'btn-group-sm']
-
-
             ],
-
 
             'striped' => true,
             'condensed' => true,

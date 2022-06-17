@@ -27,14 +27,9 @@ class Seguridad {
 
        if(Yii::$app->user->isGuest)
           return false;
-
-
        if (empty($accion)){
            $accion=$_GET['r'];
        }
-
-
-       // var_dump($_GET['r']);
        $array = explode("/",$accion);
        if (count($array)==1) {
                $controller = $accion;
@@ -43,7 +38,6 @@ class Seguridad {
                $controller = $array[0];
                $accion = $array[1];
        }
-
 
        $id_usuario=Yii::$app->user->identity->getId();
        $rolesusuario = \app\models\Usuariorol::findall(['id_usuario' => $id_usuario]);
@@ -63,21 +57,18 @@ class Seguridad {
                 //Si no es usuario administrador no puede acceder a los siguientes modulos
                 if ($controller == "usuario"|| $controller == "rol" || $controller == "modulo" || $controller =="accion" || $controller == "auditoria" || $controller =="usuario")
                     return false;
-                //  $accionbd=\app\modesdals\Accion::findOne(['idaccion'=>$permiso->idaccion]);
-
 
                 if ($permiso->id_accion !== null ){
-
-              $accionbd=\app\models\Accion::find()->where(['id'=>$permiso->id_accion])->one();
-              //supongo que si le das permiso para ver la grilla tambien le das permiso para ver la vista completa
-              if ($accionbd->index == false)
-                  return false;
-              if ($accion =="view" || $accion =="select" || $accion =="createdetalle" || $accion =="listdetalle" || $accion == "seleccionar")
-                 return true;
-                //si algun modulo tiene activado en verdadero la accion
-                //prevalece la accion verdadero por sobre el falso y el null
-              if ($accionbd->$accion == true)
-                  return true;
+                  $accionbd=\app\models\Accion::find()->where(['id'=>$permiso->id_accion])->one();
+                  //supongo que si le das permiso para ver la grilla tambien le das permiso para ver la vista completa
+                  if ($accionbd->index == false)
+                      return false;
+                  if ($accion =="view" || $accion =="select" || $accion =="createdetalle" || $accion =="listdetalle" || $accion == "seleccionar")
+                     return true;
+                    //si algun modulo tiene activado en verdadero la accion
+                    //prevalece la accion verdadero por sobre el falso y el null
+                  if ( $accionbd->$accion == true)
+                      return true;
                 }
 
               }
