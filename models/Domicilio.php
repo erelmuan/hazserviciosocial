@@ -23,8 +23,17 @@ use Yii;
  * @property Provincia $provincia
  * @property Tipodom $tipodom
  */
+ use app\components\behaviors\AuditoriaBehaviors;
+
 class Domicilio extends \yii\db\ActiveRecord
 {
+    public function behaviors() {
+        return array(
+            'AuditoriaBehaviors' => array(
+                'class' => AuditoriaBehaviors::className() ,
+            ) ,
+        );
+    }
     /**
      * {@inheritdoc}
      */
@@ -43,7 +52,7 @@ class Domicilio extends \yii\db\ActiveRecord
             [['id_barrio', 'id_paciente', 'id_provincia', 'id_localidad', 'id_tipodom'], 'default', 'value' => null],
             [['id_barrio', 'id_paciente', 'id_provincia', 'id_localidad', 'id_tipodom'], 'integer'],
             [['fecha_baja'], 'safe'],
-            [['principal'], 'boolean'], 
+            [['principal'], 'boolean'],
             [['id_barrio'], 'exist', 'skipOnError' => true, 'targetClass' => Barrio::className(), 'targetAttribute' => ['id_barrio' => 'id']],
             [['id_localidad'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['id_localidad' => 'id']],
             [['id_paciente'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['id_paciente' => 'id']],

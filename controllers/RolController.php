@@ -143,7 +143,7 @@ class RolController extends Controller {
             */
             Yii::$app
                 ->response->format = Response::FORMAT_JSON;
-            return ['forceClose' => true, 'success' => 'reloadDetalle(' . $id_maestro . ')'];
+                return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
         }
         else {
             /*

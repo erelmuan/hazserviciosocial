@@ -20,11 +20,9 @@ class Seguridad {
 */
 
     public static function tienePermiso($accion=''){
-
         if ( User::isUserAdmin() ){
           return true;
         }
-
        if(Yii::$app->user->isGuest)
           return false;
        if (empty($accion)){
@@ -37,6 +35,13 @@ class Seguridad {
        }else {
                $controller = $array[0];
                $accion = $array[1];
+       }
+    //Como la accion inicial para crear un registro de atención proviene del controlador de paciente
+    //Tenemos que hacer el cambio con controller y accion, de manera que si no tengo habilitado el permiso de
+    // creacion entonces no dejo ingresar a la accion pacienteregistro
+       if($accion =='pacienteregistro'){
+          $controller ='registroatencion';
+          $accion='create';
        }
 
        $id_usuario=Yii::$app->user->identity->getId();
@@ -72,12 +77,13 @@ class Seguridad {
                 }
 
               }
+
               //el rol no incluye el permisos
 
             }
 
        }
-       return false;
+       return (false);
 
 
     }

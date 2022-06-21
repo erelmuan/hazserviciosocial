@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Estado;
+use app\models\Area;
 
 /**
- * EstadoSearch represents the model behind the search form about `app\models\Estado`.
+ * AreaSearch represents the model behind the search form about `app\models\Area`.
  */
-class EstadoSearch extends Estado
+class AreaSearch extends Area
 {
     /**
      * @inheritdoc
@@ -18,9 +18,7 @@ class EstadoSearch extends Estado
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['descripcion'], 'safe'],
-            [['solicitud', 'biopsia', 'pap', 'ver_informe_solicitud', 'ver_informe_estudio'], 'boolean'],
+            [['id', 'nombre', 'id_organismo'], 'integer'],
         ];
     }
 
@@ -42,7 +40,7 @@ class EstadoSearch extends Estado
      */
     public function search($params)
     {
-        $query = Estado::find();
+        $query = Area::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,14 +56,9 @@ class EstadoSearch extends Estado
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'solicitud' => $this->solicitud,
-            'biopsia' => $this->biopsia,
-            'pap' => $this->pap,
-            'ver_informe_solicitud' => $this->ver_informe_solicitud,
-            'ver_informe_estudio' => $this->ver_informe_estudio,
+            'nombre' => $this->nombre,
+            'id_organismo' => $this->id_organismo,
         ]);
-
-        $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
 
         return $dataProvider;
     }

@@ -21,9 +21,18 @@ use Yii;
  * @property Tiporeg $tiporeg
  * @property Usuario $usuario
  */
+ use app\components\behaviors\AuditoriaBehaviors;
+
 class Registroatencion extends \yii\db\ActiveRecord
 {
 
+    public function behaviors() {
+        return array(
+            'AuditoriaBehaviors' => array(
+                'class' => AuditoriaBehaviors::className() ,
+            ) ,
+        );
+    }
     /**
      * {@inheritdoc}
      */

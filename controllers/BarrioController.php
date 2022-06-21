@@ -18,22 +18,7 @@ use app\models\HtmlHelpers;
  */
 class BarrioController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                    'bulk-delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
+    
     /**
      * Lists all Barrio models.
      * @return mixed

@@ -13,30 +13,13 @@ use yii\helpers\Html;
 use app\models\Paciente;
 use app\models\PacienteSearch;
 use app\components\Metodos\Metodos;
-use app\components\behaviors\AuditoriaBehaviors;
-use yii\filters\AccessControl;
-use app\components\Seguridad\Seguridad;
 
 /**
  * RegistroatencionController implements the CRUD actions for Registroatencion model.
  */
 class RegistroatencionController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                    'bulk-delete' => ['post'],
-                ],
-            ],
-        ];
-    }
+    
 
     /**
      * Lists all Registroatencion models.

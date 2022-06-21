@@ -28,6 +28,10 @@ use app\models\CarnetOsoc;
         </div>
       </div>
 <div class="paciente-form">
+  <? if($model->paciente->registroatencions){ ?>
+    <span style="color:red">  Advertencia: La modificacion del nombre, apellido, dni o historia clinica impactara en todos los registros anteriores del paciente <b>(NO CAMBIE LA IDENTIDAD DEL MISMO)</b>.</span>
+  <? } ?>
+
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
@@ -61,9 +65,7 @@ use app\models\CarnetOsoc;
           <?= $form->field($model->paciente, 'hc')->input("text",['style'=>'width:100%'])->label('H.C.') ?>
         </div>
        <div class="col-sm-3 pb-4">
-         <?
-
-         echo $form->field($model->paciente, 'fecha_nacimiento')->widget(DateControl::classname(), [
+         <? echo $form->field($model->paciente, 'fecha_nacimiento')->widget(DateControl::classname(), [
            'options' => ['placeholder' => 'Debe agregar una fecha',
              'value'=> ($model->paciente->fecha_nacimiento )?$model->paciente->fecha_nacimiento:'' ,
                    ],

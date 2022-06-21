@@ -200,7 +200,7 @@ class PacienteController extends Controller {
       $searchModel = new PacienteSearch();
       $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
       $dataProvider->pagination->pageSize = 7;
-      return $this->render('paciente-registro',[ 'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'model' => $model,   ]);
+      return $this->render('pacienteregistro',[ 'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'model' => $model,   ]);
     }
     /**
      * Finds the Paciente model based on its primary key value.

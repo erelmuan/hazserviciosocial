@@ -14,8 +14,17 @@ use Yii;
  * @property Localidad $localidad
  * @property Domicilio[] $domicilios
  */
+ use app\components\behaviors\AuditoriaBehaviors;
+
 class Barrio extends \yii\db\ActiveRecord
 {
+    public function behaviors() {
+        return array(
+            'AuditoriaBehaviors' => array(
+                'class' => AuditoriaBehaviors::className() ,
+            ) ,
+        );
+    }
     /**
      * {@inheritdoc}
      */

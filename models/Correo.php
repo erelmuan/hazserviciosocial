@@ -14,8 +14,17 @@ use Yii;
  *
  * @property Paciente $paciente
  */
+ use app\components\behaviors\AuditoriaBehaviors;
+
 class Correo extends \yii\db\ActiveRecord
 {
+    public function behaviors() {
+        return array(
+            'AuditoriaBehaviors' => array(
+                'class' => AuditoriaBehaviors::className() ,
+            ) ,
+        );
+    }
     /**
      * {@inheritdoc}
      */

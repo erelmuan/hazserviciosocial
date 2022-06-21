@@ -12,11 +12,21 @@ use Yii;
  * @property string $direccion
  * @property string $telefono
  * @property string $email
+* @property Area[] $areas
  *
  * @property Registroatencion[] $registroatencions
  */
+ use app\components\behaviors\AuditoriaBehaviors;
+
 class Organismo extends \yii\db\ActiveRecord
 {
+    public function behaviors() {
+        return array(
+            'AuditoriaBehaviors' => array(
+                'class' => AuditoriaBehaviors::className() ,
+            ) ,
+        );
+    }
     /**
      * {@inheritdoc}
      */
@@ -49,7 +59,13 @@ class Organismo extends \yii\db\ActiveRecord
             'email' => 'Email',
         ];
     }
-
+    /**
+   		    * @return \yii\db\ActiveQuery
+   		    */
+          public function getAreas()
+  		   {
+  		       return $this->hasMany(Area::className(), ['id_organismo' => 'id']);
+  		   }
     /**
      * @return \yii\db\ActiveQuery
      */

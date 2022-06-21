@@ -19,8 +19,17 @@ use Yii;
  * @property Paciente $paciente
  * @property Tipotel $tipotel
  */
+ use app\components\behaviors\AuditoriaBehaviors;
+
 class Telefono extends \yii\db\ActiveRecord
 {
+    public function behaviors() {
+        return array(
+            'AuditoriaBehaviors' => array(
+                'class' => AuditoriaBehaviors::className() ,
+            ) ,
+        );
+    }
     /**
      * {@inheritdoc}
      */

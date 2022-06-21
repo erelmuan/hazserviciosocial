@@ -58,6 +58,7 @@ class RegistroatencionSearch extends Registroatencion
         ->innerJoinWith('paciente', true)
         ->innerJoinWith('tiporeg', 'tiporeg.id = registroatencion.id_tiporeg')
         ->innerJoinWith('usuario', 'usuario.id = registroatencion.id_usuario')
+        ->innerJoinWith('organismo', 'organismo.id = registroatencion.id_organismo')
         //condidero a los registros que tienen pacientes sin importar si tienen domicilio
         ->leftJoin('domicilio',  'paciente.id =domicilio.id_paciente')
         ->leftJoin('localidad',  'localidad.id =domicilio.id_localidad')
@@ -94,6 +95,7 @@ class RegistroatencionSearch extends Registroatencion
         ->andFilterWhere(['ilike', 'tiporeg.descripcion', $this->tiporeg])
         ->andFilterWhere(['ilike', 'localidad.nombre', $this->localidad])
         ->andFilterWhere(['ilike', 'barrio.nombre', $this->barrio])
+        ->andFilterWhere(['ilike', 'organismo.nombre', $this->organismo])
         ->andFilterWhere(['>=', 'fecha', $this->fecha_desde])
         ->andFilterWhere(['<', 'fecha', $this->fecha_hasta]);
 
