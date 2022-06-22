@@ -66,7 +66,7 @@ class PacienteController extends Controller {
         if ($request->isAjax) {
             Yii::$app
                 ->response->format = Response::FORMAT_JSON;
-            return ['title' => "Paciente #" . $id, 'content' => $this->renderAjax('view', ['model' => $model, 'carnet' => $carnet, ]) , 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) ];
+            return ['title' => "Paciente #" . $id, 'content' => $this->renderAjax('_detalleview', ['model' => $model, 'carnet' => $carnet, ]) , 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) ];
         }
         else {
             return $this->render('view', ['model' => $model, 'carnet' => $carnet, ]);
