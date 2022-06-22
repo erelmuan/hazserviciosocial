@@ -1,10 +1,10 @@
 <style>
 body {
-  /* background-image: url("img/lab.jpg"); */
+  background-image: url("img/servsocial.jpg");
   background-color: #cccccc;
   background-position: center; /* Center the image */
    background-size: cover;
-    backdrop-filter: blur(6px);
+    /* backdrop-filter: blur(6px); */
     /* -webkit-filter: blur(5px);
 -moz-filter: blur(5px);
 -o-filter: blur(5px);
