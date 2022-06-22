@@ -12,13 +12,18 @@ use app\models\Area;
  */
 class AreaSearch extends Area
 {
+  public $organismo;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'nombre', 'id_organismo'], 'integer'],
+            [['nombre'], 'string'],
+            [['id', 'id_organismo'], 'integer'],
+            [['nombre','organismo'], 'safe'],
+
         ];
     }
 
@@ -40,7 +45,7 @@ class AreaSearch extends Area
      */
     public function search($params)
     {
-        $query = Area::find();
+        $query = Area::find()->innerJoinWith('organismo', true);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,9 +61,9 @@ class AreaSearch extends Area
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'nombre' => $this->nombre,
-            'id_organismo' => $this->id_organismo,
         ]);
+        $query->andFilterWhere(['like', 'nombre', $this->nombre])
+        ->andFilterWhere(['ilike', 'organismo.nombre', $this->organismo]);
 
         return $dataProvider;
     }

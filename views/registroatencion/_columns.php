@@ -70,6 +70,13 @@ return [
         'value'=>'usuario.nombre'
     ],
     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'area',
+        'width' => '170px',
+        'value' => 'area.nombre'
+
+    ],
+    [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
         'vAlign'=>'middle',

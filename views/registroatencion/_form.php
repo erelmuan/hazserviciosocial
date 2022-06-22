@@ -12,11 +12,14 @@ use kartik\form\ActiveField;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use app\models\Organismo;
+use app\models\Area;
 use app\models\Tiporeg;
 use yii\widgets\MaskedInput;
 use kartik\datecontrol\DateControl;
 use nex\chosen\Chosen;
 use app\models\Usuario;
+use kartik\depdrop\DepDrop;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RegistroatencionSearch */
@@ -46,6 +49,8 @@ CrudAsset::register($this);
           <?
             $form = ActiveForm::begin();
             $maporganismo = ArrayHelper::map(Organismo::find()->all() , 'id',  'nombre'  );
+            $maparea = ArrayHelper::map(Area::Find()->where(['id_organismo' => $model->id_organismo])->all() , 'id', 'nombre');
+            // $maparea = ArrayHelper::map(Area::find()->all() , 'id',  'nombre'  );
             $maptiporeg = ArrayHelper::map(Tiporeg::find()->all() , 'id',  'descripcion'  );
           ?>
 
@@ -64,31 +69,51 @@ CrudAsset::register($this);
                 ?>
            </div>
            <div class='col-sm-3'>
-                <?=$form->field($model, 'fecha')->widget(DateControl::classname(), [
-                            'options' => ['placeholder' => 'Ingrese fecha (opcional)',
-                            'value'=> ($model->fecha)?$model->fecha:"" ,
-                                    ],
-                            'type'=>DateControl::FORMAT_DATE,
-                            'autoWidget'=>true,
-                            'displayFormat' => 'php:d/m/Y',
-                            'saveFormat' => 'php:Y-m-d',
-                          ])->label('Fecha');
+             <?=$form->field($model, 'numero_nota')->textInput(['style'=> 'font-size:23px;color:red;','disabled'=>(isset($model->estado) && ($model->estado->descripcion=="LISTO" && !Usuario::isPatologo()))]) ; ?>
+             <?= $form->field($model, 'id_organismo')->dropDownList($maporganismo, ['id'=>'id_organismo',    'prompt'=>'- Seleccionar organismo'])->label('Organismo') ;?>
 
-                  echo $form->field($model, 'id_organismo')->widget(
-                    Chosen::className(), [
-                     'items' => $maporganismo,
-                     'clientOptions' => [
-                       'rtl'=> true,
-                         'search_contains' => true,
-                         'single_backstroke_delete' => false,
-                     ],])->label("Organismo");
+              <?
+               // echo    $form->field($model, 'id_organismo')->widget(
+               //      Chosen::className(), [
+               //       'items' => $maporganismo,
+               //       'clientOptions' => [
+               //         'rtl'=> true,
+               //           'search_contains' => true,
+               //           'single_backstroke_delete' => false,
+               //       ],])->label("Organismo");
 
                      ?>
             </div>
             <div class='col-sm-3'>
-                <?=$form->field($model, 'numero_nota')->textInput(['style'=> 'font-size:23px;color:red;','disabled'=>(isset($model->estado) && ($model->estado->descripcion=="LISTO" && !Usuario::isPatologo()))]) ; ?>
-                <?=$form->field($model, "motivo")->textarea(["rows" => 4]) ; ?>
+                <?=$form->field($model, 'fecha')->widget(DateControl::classname(), [
+                          'options' => ['placeholder' => 'Ingrese fecha (opcional)',
+                          'value'=> ($model->fecha)?$model->fecha:"" ,
+                                  ],
+                          'type'=>DateControl::FORMAT_DATE,
+                          'autoWidget'=>true,
+                          'displayFormat' => 'php:d/m/Y',
+                          'saveFormat' => 'php:Y-m-d',
+                        ])->label('Fecha'); ?>
+
+                <?
+                 // echo $form->field($model, 'id_area')->textInput()->label("Area");
+                 echo $form->field($model, 'id_area')->widget(DepDrop::classname(), [
+                     'data'=>$maparea,
+                     'options'=>['id'=>'id_area'],
+                     'select2Options'=>['pluginOptions'=>['allowClear'=>true]],
+                     'pluginOptions'=>[
+                       'depends'=>['id_organismo'],
+                        'placeholder'=>'Seleccionar area...',
+                        'url'=>Url::to(['/registroatencion/subcat'])
+                     ]
+                 ])->label('Area');
+
+                 ?>
                 <?=$form->field($model, 'id_usuario')->hiddenInput(["value"=>Yii::$app->user->identity->id])->label(false); ?>
+
+            </div>
+            <div class='col-sm-3'>
+                <?=$form->field($model, "motivo")->textarea(["rows" => 4]) ; ?>
 
             </div>
           </div>

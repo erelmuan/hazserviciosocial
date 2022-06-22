@@ -15,7 +15,8 @@ use Yii;
  * @property string $fecha
  * @property int $numero_nota
  * @property int $id_usuario
- *
+ * @property int $id_area
+ * @property Area $area
  * @property Organismo $organismo
  * @property Paciente $paciente
  * @property Tiporeg $tiporeg
@@ -48,8 +49,8 @@ class Registroatencion extends \yii\db\ActiveRecord
     {
         return [
             [['id_paciente', 'motivo', 'id_tiporeg', 'id_organismo', 'id_usuario','fecha'], 'required'],
-            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario'], 'default', 'value' => null],
-            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario'], 'integer'],
+            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario','id_area'], 'default', 'value' => null],
+            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario','id_area'], 'integer'],
             [['motivo'], 'string'],
             [['fecha'], 'safe'],
             [['id_paciente'], 'unique'],
@@ -57,6 +58,7 @@ class Registroatencion extends \yii\db\ActiveRecord
             [['id_paciente'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['id_paciente' => 'id']],
             [['id_tiporeg'], 'exist', 'skipOnError' => true, 'targetClass' => Tiporeg::className(), 'targetAttribute' => ['id_tiporeg' => 'id']],
             [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_usuario' => 'id']],
+            [['id_area'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['id_area' => 'id']],
         ];
     }
 
@@ -139,7 +141,13 @@ class Registroatencion extends \yii\db\ActiveRecord
               'label'=> 'Barrio',
               'value'=>'paciente.domicilio.barrio.nombre'
           ],
+          [
+              'class'=>'\kartik\grid\DataColumn',
+              'attribute'=>'area',
+              'width' => '170px',
+              'value' => 'area.nombre'
 
+          ],
         ];
     }
     /**
@@ -156,6 +164,7 @@ class Registroatencion extends \yii\db\ActiveRecord
             'fecha' => 'Fecha',
             'numero_nota' => 'Numero Nota',
             'id_usuario' => 'Id Usuario',
+            'id_area' => 'Id Area',
         ];
     }
 
@@ -190,4 +199,12 @@ class Registroatencion extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuario::className(), ['id' => 'id_usuario']);
     }
+
+	   /**
+	    * @return \yii\db\ActiveQuery
+    */
+		  public function getArea()
+		  {
+		      return $this->hasOne(Area::className(), ['id' => 'id_area']);
+	   }
 }

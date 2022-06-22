@@ -12,6 +12,8 @@ use Yii;
  * @property int $id_organismo
  *
  * @property Organismo $organismo
+ * @property Registroatencion[] $registroatencions
+
  */
 class Area extends \yii\db\ActiveRecord
 {
@@ -29,10 +31,10 @@ class Area extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'id_organismo'], 'default', 'value' => null],
-            [['nombre', 'id_organismo'], 'integer'],
+            [['id_organismo'], 'default', 'value' => null],
+            [['nombre'], 'string'],
+            [['id_organismo'], 'integer'],
             [['id_organismo'], 'required'],
-            [['id_organismo'], 'unique'],
             [['id_organismo'], 'exist', 'skipOnError' => true, 'targetClass' => Organismo::className(), 'targetAttribute' => ['id_organismo' => 'id']],
         ];
     }
@@ -56,4 +58,11 @@ class Area extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Organismo::className(), ['id' => 'id_organismo']);
     }
+    /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getRegistroatencions()
+  {
+      return $this->hasMany(Registroatencion::className(), ['id_area' => 'id']);
+  }
 }

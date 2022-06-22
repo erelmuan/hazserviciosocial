@@ -16,6 +16,7 @@ class RegistroatencionSearch extends Registroatencion
   // en los atributos
     public $paciente;
     public $organismo;
+    public $area;
     public $localidad;
     public $barrio;
     public $usuario;
@@ -31,7 +32,7 @@ class RegistroatencionSearch extends Registroatencion
             [['id', 'id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario'], 'integer'],
             [['fecha_desde','fecha_hasta','motivo', 'fecha'], 'safe'],
             ['fecha', 'date', 'format' => 'dd/MM/yyyy'],
-            [['paciente','tiporeg','organismo','usuario','localidad','barrio'], 'safe'],
+            [['paciente','tiporeg','organismo','usuario','localidad','barrio','area'], 'safe'],
 
         ];
     }
@@ -59,6 +60,7 @@ class RegistroatencionSearch extends Registroatencion
         ->innerJoinWith('tiporeg', 'tiporeg.id = registroatencion.id_tiporeg')
         ->innerJoinWith('usuario', 'usuario.id = registroatencion.id_usuario')
         ->innerJoinWith('organismo', 'organismo.id = registroatencion.id_organismo')
+        ->leftJoin('area', 'area.id = registroatencion.id_area')
         //condidero a los registros que tienen pacientes sin importar si tienen domicilio
         ->leftJoin('domicilio',  'paciente.id =domicilio.id_paciente')
         ->leftJoin('localidad',  'localidad.id =domicilio.id_localidad')
@@ -96,6 +98,8 @@ class RegistroatencionSearch extends Registroatencion
         ->andFilterWhere(['ilike', 'localidad.nombre', $this->localidad])
         ->andFilterWhere(['ilike', 'barrio.nombre', $this->barrio])
         ->andFilterWhere(['ilike', 'organismo.nombre', $this->organismo])
+        ->andFilterWhere(['ilike', 'area.nombre', $this->area])
+
         ->andFilterWhere(['>=', 'fecha', $this->fecha_desde])
         ->andFilterWhere(['<', 'fecha', $this->fecha_hasta]);
 

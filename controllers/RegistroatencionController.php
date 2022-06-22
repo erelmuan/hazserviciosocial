@@ -11,15 +11,18 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use app\models\Paciente;
+use app\models\Area;
 use app\models\PacienteSearch;
 use app\components\Metodos\Metodos;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 /**
  * RegistroatencionController implements the CRUD actions for Registroatencion model.
  */
 class RegistroatencionController extends Controller
 {
-    
+
 
     /**
      * Lists all Registroatencion models.
@@ -197,7 +200,30 @@ class RegistroatencionController extends Controller
 
     }
 
-
+    public function actionSubcat() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $id_organismo = $parents[0];
+                //obtener todas las localidades por el id de la organismo
+                $Arrayareas = Area::findall(['id_organismo' => $id_organismo]);
+                ArrayHelper::multisort($Arrayareas, ['nombre'], [SORT_ASC]);
+                $i = 0;
+                $areas = [];
+                foreach ($Arrayareas as $key => $value) {
+                    $areas[$i] = array(
+                        'id' => $value['id'],
+                        'name' => $value['nombre']
+                    );
+                    $i = $i + 1;
+                }
+                $out = [['id' => '<sub-cat-id-1>', 'name' => '<sub-cat-name1>'], ['id' => '<sub-cat_id_2>', 'name' => '<sub-cat-name2>']];
+                return Json::encode(['output' => $areas]);
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
     /**
      * Finds the Registroatencion model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

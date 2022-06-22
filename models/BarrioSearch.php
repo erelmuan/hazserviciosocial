@@ -12,6 +12,8 @@ use app\models\Barrio;
  */
 class BarrioSearch extends Barrio
 {
+  public $localidad;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class BarrioSearch extends Barrio
     {
         return [
             [['id', 'id_localidad'], 'integer'],
-            [['nombre'], 'safe'],
+            [['nombre','localidad'], 'safe'],
         ];
     }
 
@@ -41,7 +43,7 @@ class BarrioSearch extends Barrio
      */
     public function search($params)
     {
-        $query = Barrio::find();
+        $query = Barrio::find()->innerJoinWith('localidad', true);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -59,8 +61,8 @@ class BarrioSearch extends Barrio
             'id' => $this->id,
             'id_localidad' => $this->id_localidad,
         ]);
-
-        $query->andFilterWhere(['like', 'nombre', $this->nombre]);
+        $query->andFilterWhere(['like', 'nombre', $this->nombre])
+        ->andFilterWhere(['ilike', 'localidad.nombre', $this->localidad]);
 
         return $dataProvider;
     }

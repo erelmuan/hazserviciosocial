@@ -96,7 +96,7 @@ $columns[]=
 </div>
   </div>
 <p>
-  <?  echo Html::a('Nuevo registro', "?r=paciente%2Fpacienteregistro", ['class' => 'btn btn-success']);
+  <?  echo Html::a('Nuevo registro', "?r=paciente/pacienteregistro", ['class' => 'btn btn-success']);
  ?>
 </p>
 <?=$export; ?>
