@@ -38,7 +38,7 @@ use yii\widgets\DetailView;
                                   <b>Tipo</b>: ".$domicilio->tipodom->descripcion."<br>
                                   <b>Provincia</b>: ".$domicilio->provincia->nombre."<br>
                                   <b>Localidad</b>: ".$domicilio->localidad->nombre."<br>
-                                  <b>Barrio</b>: ".$domicilio->barrio->nombre."<br>
+                                  <b>Barrio</b>: ".($domicilio->barrio==null?'No definido':$domicilio->barrio->nombre)."<br>
                                   <b>Principal</b>: ".($domicilio->principal?"SI":"NO")."<br>";
 
                             $num ++;

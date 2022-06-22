@@ -132,7 +132,13 @@ class Domicilio extends \yii\db\ActiveRecord
     }
     public function getBarrios($id_localidad)
     {
-        return ArrayHelper::map(Barrio::find()->where(['id_localidad'=>$id_localidad])->all(), 'id','nombre');
+        $barrios=Barrio::find()->where(['id_localidad'=>$id_localidad])->all();
+        if(count($barrios)==0){
+          return[null,null];
+        }else {
+          return ArrayHelper::map($barrios, 'id','nombre');
+
+        }
     }
 
 }

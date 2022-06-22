@@ -55,13 +55,13 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'localidad',
         'label'=> 'Localidad',
-        'value'=>'paciente.domicilio.localidad.nombre'
+        'value'=>'historicodomicilio.localidad.nombre'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'barrio',
         'label'=> 'Barrio',
-        'value'=>'paciente.domicilio.barrio.nombre'
+        'value'=>'historicodomicilio.barrio.nombre'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

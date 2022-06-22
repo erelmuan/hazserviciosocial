@@ -116,6 +116,9 @@ class PacienteController extends Controller {
                 return $this->redirect(['view', 'id' => $model->paciente->id]);
               }
             }
+            else {
+                return $this->render('create', ['model' => $model]);
+              }
         }
         else {
             return $this->render('create', ['model' => $model]);
@@ -145,6 +148,9 @@ class PacienteController extends Controller {
               }else {
                 return $this->redirect(['view', 'id' => $model->paciente->id]);
               }
+            }
+            else {
+                return $this->render('update', ['model' => $model  ]);
             }
         }
         else {

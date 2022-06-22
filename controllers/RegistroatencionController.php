@@ -81,8 +81,10 @@ class RegistroatencionController extends Controller
          $paciente= Paciente::findOne($id_paciente);
          //HISTORICO DE DOMICILIOS PRINCIPALES  CREAR EL MODELO PARA GUARDAR!!!!
          if ($this->request->isPost) {
-             if ($model->load($request->post()) && $model->save()) {
+             if ($model->load($request->post()) && $model->saveModelCreate()) {
                  return $this->redirect(['view', 'id' => $model->id]);
+             }else {
+               return $this->render('_form', ['model' => $model, 'paciente' => $paciente ]);
              }
          }
             return $this->render('_form', ['model' => $model, 'paciente' => $paciente ]);

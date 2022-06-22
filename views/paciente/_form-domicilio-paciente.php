@@ -66,7 +66,7 @@ use kartik\datecontrol\DateControl;
     <div class="col-lg-1">
     <?  if ($domicilio->isNewRecord)
           echo $form->field($domicilio, 'id_barrio')->dropDownList(
-            ($domicilio->isNewRecord)?$domicilio->getBarrios(2845) : $domicilio->getBarrios($domicilio->localidad->id),
+            $domicilio->getBarrios(2845) ,
             ['prompt'=>'Por favor elija una',
           'id' => "domicilio-barrio{$key}",
           'name' => "Domicilios[$key][id_barrio]",

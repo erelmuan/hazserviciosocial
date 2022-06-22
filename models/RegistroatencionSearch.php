@@ -62,9 +62,9 @@ class RegistroatencionSearch extends Registroatencion
         ->innerJoinWith('organismo', 'organismo.id = registroatencion.id_organismo')
         ->leftJoin('area', 'area.id = registroatencion.id_area')
         //condidero a los registros que tienen pacientes sin importar si tienen domicilio
-        ->leftJoin('domicilio',  'paciente.id =domicilio.id_paciente')
-        ->leftJoin('localidad',  'localidad.id =domicilio.id_localidad')
-        ->leftJoin('barrio',  'barrio.id =domicilio.id_barrio')
+        ->leftJoin('historicodomicilio',  'paciente.id =historicodomicilio.id_paciente')
+        ->leftJoin('localidad',  'localidad.id =historicodomicilio.id_localidad')
+        ->leftJoin('barrio',  'barrio.id =historicodomicilio.id_barrio')
 
         ;
 

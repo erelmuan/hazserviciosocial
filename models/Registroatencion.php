@@ -21,6 +21,7 @@ use Yii;
  * @property Paciente $paciente
  * @property Tiporeg $tiporeg
  * @property Usuario $usuario
+ * @property Historicodomicilio  $historicodomicilio
  */
  use app\components\behaviors\AuditoriaBehaviors;
 
@@ -53,12 +54,13 @@ class Registroatencion extends \yii\db\ActiveRecord
             [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario','id_area'], 'integer'],
             [['motivo'], 'string'],
             [['fecha'], 'safe'],
-            [['id_paciente'], 'unique'],
             [['id_organismo'], 'exist', 'skipOnError' => true, 'targetClass' => Organismo::className(), 'targetAttribute' => ['id_organismo' => 'id']],
             [['id_paciente'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['id_paciente' => 'id']],
             [['id_tiporeg'], 'exist', 'skipOnError' => true, 'targetClass' => Tiporeg::className(), 'targetAttribute' => ['id_tiporeg' => 'id']],
             [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_usuario' => 'id']],
             [['id_area'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['id_area' => 'id']],
+            // [['id_historicodomicilio'], 'exist', 'skipOnError' => true, 'targetClass' => Historicodomicilio::className(), 'targetAttribute' => ['id_historicodomicilio' => 'id']],
+
         ];
     }
 
@@ -133,13 +135,13 @@ class Registroatencion extends \yii\db\ActiveRecord
               'class'=>'\kartik\grid\DataColumn',
               'attribute'=>'localidad',
               'label'=> 'Localidad',
-              'value'=>'paciente.domicilio.localidad.nombre'
+              'value'=>'historicodomicilio.localidad.nombre'
           ],
           [
               'class'=>'\kartik\grid\DataColumn',
               'attribute'=>'barrio',
               'label'=> 'Barrio',
-              'value'=>'paciente.domicilio.barrio.nombre'
+              'value'=>'historicodomicilio.barrio.nombre'
           ],
           [
               'class'=>'\kartik\grid\DataColumn',
@@ -166,6 +168,42 @@ class Registroatencion extends \yii\db\ActiveRecord
             'id_usuario' => 'Id Usuario',
             'id_area' => 'Id Area',
         ];
+    }
+
+
+
+    public function saveModelCreate()
+    {
+      //Validar paciente
+       if(!$this->validate()) {
+            return false;
+        }
+        //Iniciar transacción
+        $transaction = Yii::$app->db->beginTransaction();
+        //Guardar paciente
+        if (!$this->save()) {
+            $transaction->rollBack();
+            return false;
+        }
+        //Guardar lista de las entidades
+        $historicodomicilio= new Historicodomicilio();
+        $historicodomicilio->id_registroatencion=$this->id;
+        $historicodomicilio->direccion=$this->paciente->domicilio->direccion;
+        $historicodomicilio->id_barrio=$this->paciente->domicilio->id_barrio;
+        $historicodomicilio->id_paciente=$this->paciente->domicilio->id_paciente;
+        $historicodomicilio->id_provincia=$this->paciente->domicilio->id_provincia;
+        $historicodomicilio->id_localidad=$this->paciente->domicilio->id_localidad;
+        $historicodomicilio->id_tipodom=$this->paciente->domicilio->id_tipodom;
+        $historicodomicilio->fecha_baja=$this->paciente->domicilio->fecha_baja;
+        $historicodomicilio->principal=$this->paciente->domicilio->principal;
+
+        if ( !$historicodomicilio->save()) {
+            $transaction->rollBack();
+            return false;
+        }
+        //Finalizar transacción
+        $transaction->commit();
+        return true;
     }
 
     /**
@@ -207,4 +245,14 @@ class Registroatencion extends \yii\db\ActiveRecord
 		  {
 		      return $this->hasOne(Area::className(), ['id' => 'id_area']);
 	   }
+
+     /**
+  * @return \yii\db\ActiveQuery
+  */
+     public function getHistoricodomicilio()
+     {
+         return $this->hasOne(Historicodomicilio::className(), [  'id_registroatencion'=>'id']);
+     }
+
+
 }

@@ -38,7 +38,8 @@ class HtmlHelpers {
             }
         }
         else{
-            $droptions = "<option value=0>No se han encontrado resultados</option>";
+            $droptions = "<option value=''>No se han encontrado resultados</option>";
+
         }
 
         return $droptions;
