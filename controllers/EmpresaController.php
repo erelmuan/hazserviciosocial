@@ -3,29 +3,42 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Barrio;
-use app\models\BarrioSearch;
+use app\models\Empresa;
+use app\models\EmpresaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
-use app\models\HtmlHelpers;
-
 
 /**
- * BarrioController implements the CRUD actions for Barrio model.
+ * EmpresaController implements the CRUD actions for Empresa model.
  */
-class BarrioController extends Controller
+class EmpresaController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                    'bulk-delete' => ['post'],
+                ],
+            ],
+        ];
+    }
 
     /**
-     * Lists all Barrio models.
+     * Lists all Empresa models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new BarrioSearch();
+        $searchModel = new EmpresaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -36,7 +49,7 @@ class BarrioController extends Controller
 
 
     /**
-     * Displays a single Barrio model.
+     * Displays a single Empresa model.
      * @param integer $id
      * @return mixed
      */
@@ -46,7 +59,7 @@ class BarrioController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Barrio #".$id,
+                    'title'=> "Empresa #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -61,7 +74,7 @@ class BarrioController extends Controller
     }
 
     /**
-     * Creates a new Barrio model.
+     * Creates a new Empresa model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -69,7 +82,7 @@ class BarrioController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new Barrio();
+        $model = new Empresa();
 
         if($request->isAjax){
             /*
@@ -78,7 +91,7 @@ class BarrioController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Crear nuevo Barrio",
+                    'title'=> "Crear nueva Empresa",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -89,15 +102,15 @@ class BarrioController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Crear nuevo Barrio",
-                    'content'=>'<span class="text-success">Create Barrio success</span>',
+                    'title'=> "Crear nueva Empresa",
+                    'content'=>'<span class="text-success">Crear Empresa satisfactoriamente</span>',
                     'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Crear más',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
 
                 ];
             }else{
                 return [
-                    'title'=> "Crear nuevo Barrio",
+                    'title'=> "Crear nueva Empresa",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -122,7 +135,7 @@ class BarrioController extends Controller
     }
 
     /**
-     * Updates an existing Barrio model.
+     * Updates an existing Empresa model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -140,17 +153,17 @@ class BarrioController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Actualizar Barrio #".$id,
+                    'title'=> "Actualizar Empresa #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Guardar',['disabled'=>(count($model->domicilios) >0),'class'=>'btn btn-primary','type'=>"submit"])
+                                Html::button('Guardar',['disabled'=>(count($model->telefonos) >0),'class'=>'btn btn-primary','type'=>"submit"])
                 ];
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Barrio #".$id,
+                    'title'=> "Empresa #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -159,7 +172,7 @@ class BarrioController extends Controller
                 ];
             }else{
                  return [
-                    'title'=> "Actualizar Barrio #".$id,
+                    'title'=> "Actualizar Empresa #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -182,7 +195,7 @@ class BarrioController extends Controller
     }
 
     /**
-     * Delete an existing Barrio model.
+     * Delete an existing Empresa model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -210,7 +223,7 @@ class BarrioController extends Controller
     }
 
      /**
-     * Delete multiple existing Barrio model.
+     * Delete multiple existing Empresa model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -239,19 +252,17 @@ class BarrioController extends Controller
         }
 
     }
-    public function actionArraybarrios($id){
-        echo HtmlHelpers::dropDownList(Barrio::className(), 'id_localidad', $id, 'id', 'nombre');
-    }
+
     /**
-     * Finds the Barrio model based on its primary key value.
+     * Finds the Empresa model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Barrio the loaded model
+     * @return Empresa the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Barrio::findOne($id)) !== null) {
+        if (($model = Empresa::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -1,26 +1,37 @@
 <?php
+
 namespace app\models;
+
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\AnioProtocolo;
+use app\models\Empresa;
+
 /**
- * AnioProtocoloSearch represents the model behind the search form about `app\models\AnioProtocolo`.
+ * EmpresaSearch represents the model behind the search form about `app\models\Empresa`.
  */
-class AnioProtocoloSearch extends AnioProtocolo {
+class EmpresaSearch extends Empresa
+{
     /**
      * @inheritdoc
      */
-    public function rules() {
-        return [[['anio', 'id'], 'integer'], [['activo'], 'boolean'], ];
+    public function rules()
+    {
+        return [
+            [['id'], 'integer'],
+            [['denominacion'], 'safe'],
+        ];
     }
+
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -28,16 +39,28 @@ class AnioProtocoloSearch extends AnioProtocolo {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
-        $query = AnioProtocolo::find();
-        $dataProvider = new ActiveDataProvider(['query' => $query, ]);
+    public function search($params)
+    {
+        $query = Empresa::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
         $this->load($params);
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-        $query->andFilterWhere(['anio' => $this->anio, 'activo' => $this->activo, 'id' => $this->id, ]);
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+        ]);
+
+        $query->andFilterWhere(['like', 'denominacion', $this->denominacion]);
+
         return $dataProvider;
     }
 }

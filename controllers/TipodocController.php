@@ -34,7 +34,7 @@ class TipodocController extends Controller {
         if ($request->isAjax) {
             Yii::$app
                 ->response->format = Response::FORMAT_JSON;
-            return ['title' => "Tipo de documento #" . $id, 'content' => $this->renderAjax('view', ['model' => $this->findModel($id) , ]) , 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) . Html::a('Editar', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote']) ];
+            return ['title' => "Tipo de documento #" . $id, 'content' => $this->renderAjax('view', ['model' => $this->findModel($id) , ]) , 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"])  ];
         }
         else {
             return $this->render('view', ['model' => $this->findModel($id) , ]);
@@ -94,13 +94,13 @@ class TipodocController extends Controller {
             Yii::$app
                 ->response->format = Response::FORMAT_JSON;
             if ($request->isGet) {
-                return ['title' => "Actualizar tipo de documento #" . $id, 'content' => $this->renderAjax('update', ['model' => $model, ]) , 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) . Html::button('Guardar', ['class' => 'btn btn-primary', 'type' => "submit"]) ];
+                return ['title' => "Actualizar tipo de documento #" . $id, 'content' => $this->renderAjax('update', ['model' => $model, ]) , 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) . Html::button('Guardar', ['disabled'=>(count($model->pacientes) >0),'class' => 'btn btn-primary', 'type' => "submit"]) ];
             }
             else if ($model->load($request->post()) && $model->save()) {
                 return ['forceReload' => '#crud-datatable-pjax', 'title' => "Tipo de documento #" . $id, 'content' => $this->renderAjax('view', ['model' => $model, ]) , 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) . Html::a('Editar', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote']) ];
             }
             else {
-                return ['title' => "Actulizar Tipo de documento #" . $id, 'content' => $this->renderAjax('update', ['model' => $model, ]) , 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) . Html::button('Guardar', ['class' => 'btn btn-primary', 'type' => "submit"]) ];
+                return ['title' => "Actulizar Tipo de documento #" . $id, 'content' => $this->renderAjax('update', ['model' => $model, ]) , 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) . Html::button('Guardar', ['disabled'=>(count($model->pacientes) >0),'class' => 'btn btn-primary', 'type' => "submit"]) ];
             }
         }
         else {

@@ -11,15 +11,17 @@ use yii\helpers\ArrayHelper;
 <div class="barrio-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <? if($model->domicilios){    ?>
+      <span style="color:red">No se puede modificar, debido a que hay una asociación a uno o más registros</span>
+    <? } ?>
+    <?= $form->field($model, 'nombre')->textInput(['readOnly'=>(count($model->domicilios) >0)]) ?>
 
-    <?= $form->field($model, 'nombre')->textInput() ?>
-
-    <?  echo $form->field($model, 'id_localidad')->dropDownList(ArrayHelper::map(Localidad::find()->all(), 'id','nombre'))->label('Localidad') ; ?>
+    <?  echo $form->field($model, 'id_localidad')->dropDownList(ArrayHelper::map(Localidad::find()->all(), 'id','nombre'),['readOnly'=>(count($model->domicilios) >0)])->label('Localidad') ; ?>
 
 
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['disabled'=>(count($model->domicilios) >0) ,'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 

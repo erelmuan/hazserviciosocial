@@ -12,15 +12,17 @@ use yii\helpers\ArrayHelper;
 <div class="area-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'nombre')->textInput() ?>
+    <? if($model->registroatencions){    ?>
+      <span style="color:red">No se puede modificar, debido a que hay una asociación a uno o más registros</span>
+    <? } ?>
+    <?= $form->field($model, 'nombre')->textInput(['disabled'=>(count($model->registroatencions) >0)]) ?>
 
     <?  echo $form->field($model, 'id_organismo')->dropDownList(ArrayHelper::map(Organismo::find()->all(), 'id','nombre'))->label('Organismo') ; ?>
 
 
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar',['disabled'=>(count($model->registroatencions) >0), 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 

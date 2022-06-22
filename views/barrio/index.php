@@ -17,7 +17,7 @@ CrudAsset::register($this);
 
 ?>
 <div id="w0Prov" class="x_panel">
-  <div class="x_title"><h2><i class="fa fa-table"></i> Barrios  </h2>
+  <div class="x_title"><h2><i class="fa fa-table"></i> BARRIOS  </h2>
     <div class="clearfix"> <div class="nav navbar-right panel_toolbox"><?echo Html::button('<i class="glyphicon glyphicon-arrow-left"></i> Atrás',array('name' => 'btnBack','onclick'=>'js:history.go(-1);returnFalse;','id'=>'botonAtras')); ?></div>
 </div>
   </div>

@@ -15,18 +15,12 @@ use yii\widgets\ActiveForm;
     <? } ?>
 
     <!--si existen pacientes asociados no se puede modificar el sigla  -->
-    <? if($model->carnetOsocs){
-            echo  $form->field($model, 'sigla')->input("text",['readonly' => true])->label('Nombre');
-          }else {
-            echo  $form->field($model, 'sigla')->input("text",['style'=> 'width:100%; text-transform:uppercase;'])->label('Sigla');
-        }
+    <?=$form->field($model, 'sigla')->input("text",['disabled'=>(count($model->carnetOsocs) >0),'style'=> 'width:100%; text-transform:uppercase;'])->label('Sigla');
+
     ?>
     <!--si existen pacientes asociados no se puede modificar el denominacion  -->
-    <? if($model->carnetOsocs){
-            echo  $form->field($model, 'denominacion')->input("text",['readonly' => true])->label('Nombre');
-          }else {
-            echo  $form->field($model, 'denominacion')->input("text",['style'=> 'width:100%; text-transform:uppercase;'])->label('Denominación');
-        }
+    <?=$form->field($model, 'denominacion')->input("text",['disabled'=>(count($model->carnetOsocs) >0),'style'=> 'width:100%; text-transform:uppercase;'])->label('Denominación');
+
     ?>
 
     <?= $form->field($model, 'direccion')->textInput(['maxlength' => true]) ?>
@@ -45,7 +39,7 @@ use yii\widgets\ActiveForm;
 
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 

@@ -9,8 +9,6 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 //modelos
 use app\models\Paciente;
-use app\models\Medico;
-use app\models\Procedencia;
 use app\models\Provincia;
 use app\models\Localidad;
 use app\models\Usuario;
@@ -25,6 +23,9 @@ use app\models\Nacionalidad;
 use app\models\Tipodoc;
 use app\models\Registroatencion;
 use app\models\Organismo;
+use app\models\Area;
+use app\models\Empresa;
+
 
 use app\components\Seguridad\Seguridad;
 class SiteController extends Controller {
@@ -67,9 +68,7 @@ class SiteController extends Controller {
     public function actionIndex() {
         $cantidadRegistrosatencion = Registroatencion::find()->count();
         $cantidadPacientes = Paciente::find()->count();
-        $cantidadProcedencia = Procedencia::find()->count();
-        $cantidadMedicos = Medico::find()->count();
-        return $this->render('index', [ 'cantidadRegistrosatencion' => $cantidadRegistrosatencion,  'cantidadPacientes' => $cantidadPacientes, 'cantidadProcedencia' => $cantidadProcedencia, 'cantidadMedicos' => $cantidadMedicos, ]);
+        return $this->render('index', [ 'cantidadRegistrosatencion' => $cantidadRegistrosatencion,  'cantidadPacientes' => $cantidadPacientes ]);
     }
     /**
      * Login action.
@@ -143,16 +142,9 @@ class SiteController extends Controller {
     public function actionAbout() {
         return $this->render('about');
     }
-    public function actionPlantillas() {
-        $cantidadPlantillaDiag = Plantilladiagnostico::find()->count();
-        $cantidadPlantillaMic = Plantillamicroscopia::find()->count();
-        $cantidadPlantillaMac = Plantillamacroscopia::find()->count();
-        $cantidadPlantillaMatb = Plantillamaterial::find()->count();
-        $cantidadPlantillaFra = Plantillafrase::find()->count();
-        return $this->render('plantillas', ['cantidadPlantillaDiag' => $cantidadPlantillaDiag, 'cantidadPlantillaMic' => $cantidadPlantillaMic, 'cantidadPlantillaMac' => $cantidadPlantillaMac, 'cantidadPlantillaMatb' => $cantidadPlantillaMatb, 'cantidadPlantillaFra' => $cantidadPlantillaFra, ]);
-    }
+
     public function actionExtras() {
-        $cantidadProcedencia = Procedencia::find()->count();
+        $cantidadArea = Area::find()->count();
         $cantidadProvincia = Provincia::find()->count();
         $cantidadLocalidad = Localidad::find()->count();
         $cantidadObrasocial = Obrasocial::find()->count();
@@ -160,26 +152,11 @@ class SiteController extends Controller {
         $cantidadTipoDoc = Tipodoc::find()->count();
         $cantidadOrganismo = Organismo::find()->count();
         $cantidadBarrio = Barrio::find()->count();
+        $cantidadEmpresa = Empresa::find()->count();
 
-        return $this->render('extras', ['cantidadProcedencia' => $cantidadProcedencia, 'cantidadProvincia' => $cantidadProvincia, 'cantidadLocalidad' => $cantidadLocalidad, 'cantidadBarrio' => $cantidadBarrio, 'cantidadObrasocial' => $cantidadObrasocial, 'cantidadNacionalidad' => $cantidadNacionalidad, 'cantidadTipoDoc' => $cantidadTipoDoc, 'cantidadOrganismo' => $cantidadOrganismo, ]);
+        return $this->render('extras', ['cantidadArea' => $cantidadArea, 'cantidadProvincia' => $cantidadProvincia, 'cantidadLocalidad' => $cantidadLocalidad, 'cantidadBarrio' => $cantidadBarrio, 'cantidadObrasocial' => $cantidadObrasocial, 'cantidadNacionalidad' => $cantidadNacionalidad, 'cantidadTipoDoc' => $cantidadTipoDoc, 'cantidadOrganismo' => $cantidadOrganismo,'cantidadEmpresa' => $cantidadEmpresa ]);
     }
-    public function actionPlantillasbiopsias() {
-        $cantidadPlantillaDiag = Plantilladiagnostico::find()->count();
-        $cantidadPlantillaMic = Plantillamicroscopia::find()->count();
-        $cantidadPlantillaMac = Plantillamacroscopia::find()->count();
-        $cantidadPlantillaMatb = Plantillamaterial::find()->count();
-        $cantidadPlantillaFra = Plantillafrase::find()->count();
-        return $this->render('plantillasbiopsias', ['cantidadPlantillaDiag' => $cantidadPlantillaDiag, 'cantidadPlantillaMic' => $cantidadPlantillaMic, 'cantidadPlantillaMac' => $cantidadPlantillaMac, 'cantidadPlantillaMatb' => $cantidadPlantillaMatb, 'cantidadPlantillaFra' => $cantidadPlantillaFra, ]);
-    }
-    public function actionPlantillaspaps() {
-        $cantidadPlantillaDiagP = Plantilladiagnostico::find()->count();
-        $cantidadPlantillaflora = plantillaflora::find()->count();
-        $cantidadPlantillaPav = Plantillapavimentosa::find()->count();
-        $cantidadPlantillaAsp = Plantillaaspecto::find()->count();
-        $cantidadPlantillaGla = Plantillaglandular::find()->count();
-        $cantidadPlantillaFra = Plantillafrase::find()->count();
-        return $this->render('plantillaspaps', ['cantidadPlantillaDiagP' => $cantidadPlantillaDiagP, 'cantidadPlantillaflora' => $cantidadPlantillaflora, 'cantidadPlantillaPav' => $cantidadPlantillaPav, 'cantidadPlantillaAsp' => $cantidadPlantillaAsp, 'cantidadPlantillaGla' => $cantidadPlantillaGla, 'cantidadPlantillaFra' => $cantidadPlantillaFra, ]);
-    }
+
     public function actionAdministracion() {
         $cantidadUsuarios = Usuario::find()->count();
         $cantidadAuditorias = Auditoria::find()->count();
@@ -191,11 +168,7 @@ class SiteController extends Controller {
         $cantidadAcciones = Accion::find()->count();
         return $this->render('permisos', ['cantidadRoles' => $cantidadRoles, 'cantidadModulos' => $cantidadModulos, 'cantidadAcciones' => $cantidadAcciones]);
     }
-    public function actionSolicitudes() {
-        $cantidadSolicitudbiopsia = Solicitudbiopsia::find()->count();
-        $cantidadSolicitudpap = Solicitudpap::find()->count();
-        return $this->render('solicitudes', ['cantidadSolicitudbiopsia' => $cantidadSolicitudbiopsia, 'cantidadSolicitudpap' => $cantidadSolicitudpap, ]);
-    }
+
     public function actionConstruccion() {
         return $this->render('construccion');
     }

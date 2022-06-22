@@ -17,6 +17,10 @@ height: 100%; */
 left: 0; */
 z-index: -5;
 }
+.panel {
+  opacity: 0.9;
+}
+
 </style>
 
 <?php

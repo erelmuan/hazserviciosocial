@@ -19,6 +19,10 @@ use yii\widgets\DetailView;
           'label'=> 'Organismo',
         ],
         [
+          'value'=> ($model->area)?$model->area->nombre:'(No definido)',
+          'label'=> 'Area',
+        ],
+        [
         'label'=> 'Fecha',
         'value'=> $model->fecha ,
         'format' => ['date', 'd/M/Y'],
