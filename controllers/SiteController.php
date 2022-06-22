@@ -25,6 +25,7 @@ use app\models\Registroatencion;
 use app\models\Organismo;
 use app\models\Area;
 use app\models\Empresa;
+use app\models\Tipodom;
 
 
 use app\components\Seguridad\Seguridad;
@@ -153,8 +154,8 @@ class SiteController extends Controller {
         $cantidadOrganismo = Organismo::find()->count();
         $cantidadBarrio = Barrio::find()->count();
         $cantidadEmpresa = Empresa::find()->count();
-
-        return $this->render('extras', ['cantidadArea' => $cantidadArea, 'cantidadProvincia' => $cantidadProvincia, 'cantidadLocalidad' => $cantidadLocalidad, 'cantidadBarrio' => $cantidadBarrio, 'cantidadObrasocial' => $cantidadObrasocial, 'cantidadNacionalidad' => $cantidadNacionalidad, 'cantidadTipoDoc' => $cantidadTipoDoc, 'cantidadOrganismo' => $cantidadOrganismo,'cantidadEmpresa' => $cantidadEmpresa ]);
+        $cantidadTipodom = Tipodom::find()->count();
+        return $this->render('extras', ['cantidadArea' => $cantidadArea, 'cantidadProvincia' => $cantidadProvincia, 'cantidadLocalidad' => $cantidadLocalidad, 'cantidadBarrio' => $cantidadBarrio, 'cantidadObrasocial' => $cantidadObrasocial, 'cantidadNacionalidad' => $cantidadNacionalidad, 'cantidadTipoDoc' => $cantidadTipoDoc, 'cantidadTipodom'=>$cantidadTipodom,'cantidadOrganismo' => $cantidadOrganismo,'cantidadEmpresa' => $cantidadEmpresa ]);
     }
 
     public function actionAdministracion() {

@@ -170,13 +170,9 @@ class PacienteController extends Controller {
             /*
              *   Process for ajax request
             */
-            Yii::$app
-                ->response->format = Response::FORMAT_JSON;
+            Yii::$app->response->format = Response::FORMAT_JSON;
 
-                \Yii::$app
-                    ->db
-                    ->createCommand()
-                    ->delete('carnet_os', ['id_paciente' => $id])->execute();
+                \Yii::$app ->db->createCommand()->delete('carnet_os', ['id_paciente' => $id])->execute();
                 if ($this->findModel($id)->delete()) {
                     return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
                 }

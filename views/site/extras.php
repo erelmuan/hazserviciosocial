@@ -43,7 +43,7 @@ $this->title = 'Extras';
             <div class="icon"><i class="fa fa-location-arrow"></i>
             </div>
             <div class="count"><?=$cantidadBarrio ?></div>
-            <h3>BARRIOS</h3>
+            <h3>BARRIO</h3>
             <p>AMB del lugar de los barrios.</p>
         </div>
       </div>
@@ -157,6 +157,17 @@ $this->title = 'Extras';
           <div class="count"><?=$cantidadEmpresa ?></div>
           <h3>EMPRESA</h3>
           <p>Empresa de telefonos.</p>
+      </div>
+    </div>
+    </a>
+    <a href=<?=Yii::$app->homeUrl."?r=tipodom"; ?>>
+    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="tile-stats">
+          <div class="icon"><i class="fa fa-dashboard"></i>
+          </div>
+          <div class="count"><?=$cantidadTipodom ?></div>
+          <h3>TIPO DE DOMICILIO</h3>
+          <p>Tipo de domicilio.</p>
       </div>
     </div>
     </a>
