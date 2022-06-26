@@ -69,7 +69,7 @@ CrudAsset::register($this);
                 ?>
            </div>
            <div class='col-sm-3'>
-             <?=$form->field($model, 'numero_nota')->textInput(['style'=> 'font-size:23px;color:red;','disabled'=>(isset($model->estado) && ($model->estado->descripcion=="LISTO" && !Usuario::isPatologo()))]) ; ?>
+             <?=$form->field($model, 'numero_nota')->textInput([ 'value'=> $numero_insertar,'style'=> 'font-size:23px;color:red;','readOnly'=>true]) ; ?>
              <?= $form->field($model, 'id_organismo')->dropDownList($maporganismo, ['id'=>'id_organismo',    'prompt'=>'- Seleccionar organismo'])->label('Organismo') ;?>
 
               <?
@@ -113,8 +113,10 @@ CrudAsset::register($this);
 
             </div>
             <div class='col-sm-3'>
-                <?=$form->field($model, "motivo")->textarea(["rows" => 4]) ; ?>
+                <?=$form->field($model, "motivo")->textarea(["rows" => 5]) ; ?>
 
+                <?= $form->field($model, 'num_nota_automatico')->checkBox(['label' => 'Numero de nota automatico',
+                    'onclick' => 'cambioNumnotaAutomatico();', 'checked' => '1','value' => '1']); ?>
             </div>
           </div>
           <?  if (!Yii::$app->request->isAjax){ ?>
@@ -134,3 +136,30 @@ CrudAsset::register($this);
     "footer"=>"",// always need it for jquery plugin
 ])?>
 <?php Modal::end(); ?>
+
+<script>
+function cambioNumnotaAutomatico(){
+    if(document.getElementById("registroatencion-num_nota_automatico").value==1 ){
+      document.getElementById("registroatencion-numero_nota").readOnly = false;
+      document.getElementById("registroatencion-num_nota_automatico").value =0;
+
+    }else {
+        $.ajax({
+            url: '<?php echo Url::to(['/registroatencion/buscarnumnota']) ?>',
+           type: 'get',
+           data: {
+                 _csrf : '<?=Yii::$app->request->getCsrfToken()?>'
+                 },
+           success: function (data) {
+               var content = JSON.parse(data);
+              document.getElementById("registroatencion-numero_nota").value=  content.numero_nota;
+           }
+
+      });
+      document.getElementById("registroatencion-num_nota_automatico").value =1;
+      document.getElementById("registroatencion-numero_nota").readOnly = true;
+    }
+}
+
+
+</script>

@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Registroatencion;
 use app\models\RegistroatencionSearch;
+use app\models\Anionota;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -42,7 +43,14 @@ class RegistroatencionController extends Controller
         ]);
     }
 
-
+    public function validar($fecha) {
+        //Si no encuentra protocolo año vigente para la fecha
+        if (!Anionota::getAnionotaActivo($fecha)) {
+            $this->setearMensajeError('NO SE PUEDE CREAR EL REGISTRO SI LA FECHA  NO COINCIDE CON EL AÑO DE NOTA ACTIVO ');
+            return false;
+        }
+        return true;
+    }
     /**
      * Displays a single Registroatencion model.
      * @param integer $id
@@ -79,19 +87,35 @@ class RegistroatencionController extends Controller
          ////////////PACIENTE/////////////////
          $modelpaciente = new Paciente();
          $paciente= Paciente::findOne($id_paciente);
-         //HISTORICO DE DOMICILIOS PRINCIPALES  CREAR EL MODELO PARA GUARDAR!!!!
+
          if ($this->request->isPost) {
+           if ($model->load($request->post()) && !$this->validar($_POST["Registroatencion"]["fecha"])) {
+              return $this->render('_form', ['model' => $model, 'paciente' => $paciente ,  'numero_insertar'=> Registroatencion::obtenerNumeroNota()]);
+           }
+           if ($_POST["Registroatencion"]["num_nota_automatico"] == "1") {
+             //Si esta en protocolo automatico setear el valor
+               unset($_POST["Registroatencion" ]["numero_nota"]);
+               $model->numero_nota = Registroatencion::obtenerNumeroNota();
+           }
+
+           $anionota = Anionota::anionotaActivo();
+           $model->id_anionota = $anionota->id;
              if ($model->load($request->post()) && $model->saveModelCreate()) {
                  return $this->redirect(['view', 'id' => $model->id]);
              }else {
-               return $this->render('_form', ['model' => $model, 'paciente' => $paciente ]);
+               return $this->render('_form', ['model' => $model, 'paciente' => $paciente,  'numero_insertar'=> Registroatencion::obtenerNumeroNota()]);
              }
          }
-            return $this->render('_form', ['model' => $model, 'paciente' => $paciente ]);
+            return $this->render('_form', ['model' => $model, 'paciente' => $paciente,  'numero_insertar'=> Registroatencion::obtenerNumeroNota() ]);
 
      }
 
-
+     public function actionBuscarnumnota() {
+         $request = Yii::$app->request;
+         if ($request->isAjax) {
+             return Json::encode(["numero_nota" => Registroatencion::obtenerNumeroNota() ]);
+         }
+     }
     /**
      * Updates an existing Registroatencion model.
      * For ajax request will return json object
@@ -110,7 +134,7 @@ class RegistroatencionController extends Controller
         if ($model->load($request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-          return $this->render('_form', ['model' => $model, 'paciente' => $paciente  ]);
+          return $this->render('_form', ['model' => $model, 'paciente' => $paciente,'numero_insertar'=> Registroatencion::obtenerNumeroNota()  ]);
         }
 
     }

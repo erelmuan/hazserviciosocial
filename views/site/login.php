@@ -37,11 +37,21 @@ $this->title = 'INICIO SESIÓN';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- fullscreen_bg define el fondo de imagen -->
-<nav id="w0" class="navbar-inverse navbar-fixed-top navbar"><div class="container"><div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#w0-collapse"><span class="sr-only">Toggle navigation</span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span></button><a class="navbar-brand" href="/hazserviciosocial/web/index.php"><i class="fa fa-users"></i> HAZ SERVICIO SOCIAL</a></div><div id="w0-collapse" class="collapse navbar-collapse"><ul id="w1" class="navbar-nav navbar-right nav">
-</ul></div></div></nav>
+<nav id="w0" class="navbar-inverse navbar-fixed-top navbar"><div class="container">
+  <div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#w0-collapse"><span class="sr-only">Toggle navigation</span>
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+  </button>
+    <a class="navbar-brand" href="/hazserviciosocial/web/index.php">
+    HAZ SERVICIO SOCIAL</a>
+</div>
+    <div id="w0-collapse" class="collapse navbar-collapse">
+      <ul id="w1" class="navbar-nav navbar-right nav">
+      </ul>
+    </div>
+</div>
+</nav>
 
 
 

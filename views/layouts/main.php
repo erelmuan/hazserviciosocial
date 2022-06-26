@@ -12,7 +12,8 @@ use kartik\widgets\Growl;
 // use kartik\icons\Icon;
 use kartik\widgets\SwitchInput;
 
-use app\models\AnioProtocolo;
+use app\models\Anionota;
+
 
 
 $bundle = yiister\gentelella\assets\Asset::register($this);
@@ -235,7 +236,10 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
 
                         <div id="fecha">
                          <h2>
-                            <p id="demo"></p>
+                           <b>
+                             <input type="text" class="form-control is-invalid" value = <?= (Anionota::find()->where(['activo'=>true])->one()!== NULL)? Anionota::find()->where(['activo'=>true])->one()->anio:'INACTIVOS'  ?> readonly>  </b>
+                            <?= Html::a('<i class="glyphicon glyphicon-pencil"></i> Modificar Año-Nota', ['/anionota/index'], ['class'=>'btn btn-success grid-button']) ?>
+                            <!-- <p id="demo"></p> -->
                           </h2>
                         </div>
 
@@ -330,14 +334,7 @@ $( document ).ready(function() {
 });
 
 </script>
-<script>
-var myVar = setInterval(myTimer, 1000);
 
-function myTimer() {
-    var d = new Date();
-    document.getElementById("demo").innerHTML = d.toLocaleTimeString();
-}
-</script>
 </body>
 </html>
 <?php $this->endPage(); ?>

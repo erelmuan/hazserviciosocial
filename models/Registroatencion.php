@@ -22,6 +22,9 @@ use Yii;
  * @property Tiporeg $tiporeg
  * @property Usuario $usuario
  * @property Historicodomicilio  $historicodomicilio
+ * @property bool $num_nota_automatico
+ * @property int $id_anionota
+ * @property Anionota $anionota
  */
  use app\components\behaviors\AuditoriaBehaviors;
 
@@ -49,24 +52,29 @@ class Registroatencion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_paciente', 'motivo', 'id_tiporeg', 'id_organismo', 'id_usuario','fecha'], 'required'],
-            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario','id_area'], 'default', 'value' => null],
-            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario','id_area'], 'integer'],
+            [['id_paciente', 'motivo', 'id_tiporeg', 'id_organismo', 'id_usuario','fecha','id_anionota'], 'required'],
+            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario','id_area', 'id_anionota'], 'default', 'value' => null],
+            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario','id_area', 'id_anionota'], 'integer'],
             [['motivo'], 'string'],
             [['fecha'], 'safe'],
+            [['numero_nota'], 'required',  'whenClient' => "function (attribute, value) {
+              return $('#registroatencion-num_nota_automatico').val() == 0;
+          }"],
             [['id_organismo'], 'exist', 'skipOnError' => true, 'targetClass' => Organismo::className(), 'targetAttribute' => ['id_organismo' => 'id']],
             [['id_paciente'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['id_paciente' => 'id']],
             [['id_tiporeg'], 'exist', 'skipOnError' => true, 'targetClass' => Tiporeg::className(), 'targetAttribute' => ['id_tiporeg' => 'id']],
             [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_usuario' => 'id']],
             [['id_area'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['id_area' => 'id']],
-            // [['id_historicodomicilio'], 'exist', 'skipOnError' => true, 'targetClass' => Historicodomicilio::className(), 'targetAttribute' => ['id_historicodomicilio' => 'id']],
+            [['id_anionota', 'numero_nota'], 'unique','message' => 'El numero de nota ya fue asignado para el año seleccionado','targetAttribute' => ['id_anionota', 'numero_nota']],
+            [['num_nota_automatico'], 'boolean'],
+            [['id_anionota'], 'exist', 'skipOnError' => true, 'targetClass' => Anionota::className(), 'targetAttribute' => ['id_anionota' => 'id']],
 
         ];
     }
 
+
     public function attributeColumns()
     {
-
 
         return [
           [
@@ -254,5 +262,37 @@ class Registroatencion extends \yii\db\ActiveRecord
          return $this->hasOne(Historicodomicilio::className(), [  'id_registroatencion'=>'id']);
      }
 
+     public function getRegistrosAnio($nio) {
+         $cantidad= Registroatencion::find()->andWhere(['and' ,' "fecha"::text  like '. "'%".$nio."%'"])->count();
+         if ($cantidad >0){
+           return true;
+         }else {
+           return false;
+          }
+     }
+     public function obtenerNumeroNota()  {
+         $anionota= Anionota::anionotaActivo();
+         if ($anionota!== NULL){
+           $registro= Registroatencion::find()
+           ->andWhere(['and' ,' "fecha"::text  like '. "'%".$anionota->anio."%'"])
+           ->orderBy(['numero_nota' => SORT_DESC])->one();
 
+         }
+         if ($registro == NULL){
+           $nroNota=0;
+         }else {
+           $nroNota=$registro->numero_nota;
+
+         }
+         return $nroNota+ 1;
+
+     }
+
+      /**
+        * @return \yii\db\ActiveQuery
+      */
+     public function getAnionota()
+       {
+         return $this->hasOne(Anionota::className(), ['id' => 'id_anionota']);
+     }
 }

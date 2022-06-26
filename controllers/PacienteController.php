@@ -111,7 +111,7 @@ class PacienteController extends Controller {
             if($model->save()){
               //Si elegimos en el formulario la opcion de "crear e ir al registro"
               if($_POST['registro']){
-                return $this->redirect(['registroatencion/create', 'id' => $model->paciente->id]);
+                return $this->redirect(['registroatencion/create', 'id_paciente' => $model->paciente->id]);
               }else {
                 return $this->redirect(['view', 'id' => $model->paciente->id]);
               }

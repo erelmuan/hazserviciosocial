@@ -112,6 +112,9 @@ $this->title = 'Inicio';
 <div id="detalleIndex" >
 
 
+  <img src=<?=Yii::$app->request->baseUrl."/img/logo-redondo.png"?> width="70" height="70"   >
+
+
 <?= Icon::show('icon-groups-friends', ['framework' => Icon::WHHG]) ?>
      <span>DEPARTAMENTO SERVICIO SOCIAL - HOSPITAL ARTÉMIDES ZATTI </span>
 <?= Icon::show('icon-groups-friends', ['framework' => Icon::WHHG]) ?>
