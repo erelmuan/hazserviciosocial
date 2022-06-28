@@ -70,17 +70,16 @@ CrudAsset::register($this);
            </div>
            <div class='col-sm-3'>
              <?=$form->field($model, 'numero_nota')->textInput([ 'value'=> $numero_insertar,'style'=> 'font-size:23px;color:red;','readOnly'=>true]) ; ?>
-             <?= $form->field($model, 'id_organismo')->dropDownList($maporganismo, ['id'=>'id_organismo',    'prompt'=>'- Seleccionar organismo'])->label('Organismo') ;?>
+             <?//= $form->field($model, 'id_organismo')->dropDownList($maporganismo, ['id'=>'id_organismo',    'prompt'=>'- Seleccionar organismo'])->label('Organismo') ;?>
 
-              <?
-               // echo    $form->field($model, 'id_organismo')->widget(
-               //      Chosen::className(), [
-               //       'items' => $maporganismo,
-               //       'clientOptions' => [
-               //         'rtl'=> true,
-               //           'search_contains' => true,
-               //           'single_backstroke_delete' => false,
-               //       ],])->label("Organismo");
+              <?echo    $form->field($model, 'id_organismo')->widget(
+                    Chosen::className(), [
+                     'items' => $maporganismo,
+                     'clientOptions' => [
+                       'rtl'=> true,
+                         'search_contains' => true,
+                         'single_backstroke_delete' => false,
+                     ],])->label("Organismo");
 
                      ?>
             </div>
@@ -102,7 +101,7 @@ CrudAsset::register($this);
                      'options'=>['id'=>'id_area'],
                      'select2Options'=>['pluginOptions'=>['allowClear'=>true]],
                      'pluginOptions'=>[
-                       'depends'=>['id_organismo'],
+                       'depends'=>['registroatencion-id_organismo'],
                         'placeholder'=>'Seleccionar area...',
                         'url'=>Url::to(['/registroatencion/subcat'])
                      ]

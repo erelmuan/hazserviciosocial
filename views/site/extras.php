@@ -78,7 +78,7 @@ $this->title = 'Extras';
     <a href=<?=Yii::$app->homeUrl."?r=tiporeg"; ?>>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="tile-stats">
-          <div class="icon"><i class="fa fa-mortar-board"></i>
+          <div class="icon"><i class="fa fa-dashboard"></i>
           </div>
           <div class="count">2</div>
           <h3>TIPOS DE REGISTRO</h3>
@@ -102,7 +102,7 @@ $this->title = 'Extras';
     <a href=<?=Yii::$app->homeUrl."?r=tipodoc"; ?>>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="tile-stats">
-          <div class="icon"><i class="fa fa-book"></i>
+          <div class="icon"><i class="fa fa-dashboard"></i>
           </div>
           <div class="count"><?=$cantidadTipoDoc ?></div>
           <h3>TIPO DOCUMENTO</h3>
@@ -128,7 +128,7 @@ $this->title = 'Extras';
     <a href=<?=Yii::$app->homeUrl."?r=organismo"; ?>>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="tile-stats">
-          <div class="icon"><i class="fa fa-dashboard"></i>
+          <div class="icon"><i class="fa fa-building-o"></i>
           </div>
           <div class="count"><?=$cantidadOrganismo ?></div>
           <h3>ORGANISMO</h3>
@@ -141,7 +141,7 @@ $this->title = 'Extras';
     <a href=<?=Yii::$app->homeUrl."?r=area"; ?>>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="tile-stats">
-          <div class="icon"><i class="fa fa-dashboard"></i>
+          <div class="icon"><i class="fa fa-building-o"></i>
           </div>
           <div class="count"><?=$cantidadArea?></div>
           <h3>AREA</h3>
@@ -152,7 +152,7 @@ $this->title = 'Extras';
     <a href=<?=Yii::$app->homeUrl."?r=empresa"; ?>>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="tile-stats">
-          <div class="icon"><i class="fa fa-dashboard"></i>
+          <div class="icon"><i class="fa fa-building-o"></i>
           </div>
           <div class="count"><?=$cantidadEmpresa ?></div>
           <h3>EMPRESA</h3>

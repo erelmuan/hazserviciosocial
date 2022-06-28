@@ -196,14 +196,14 @@ class Registroatencion extends \yii\db\ActiveRecord
         //Guardar lista de las entidades
         $historicodomicilio= new Historicodomicilio();
         $historicodomicilio->id_registroatencion=$this->id;
-        $historicodomicilio->direccion=$this->paciente->domicilio->direccion;
-        $historicodomicilio->id_barrio=$this->paciente->domicilio->id_barrio;
-        $historicodomicilio->id_paciente=$this->paciente->domicilio->id_paciente;
-        $historicodomicilio->id_provincia=$this->paciente->domicilio->id_provincia;
-        $historicodomicilio->id_localidad=$this->paciente->domicilio->id_localidad;
-        $historicodomicilio->id_tipodom=$this->paciente->domicilio->id_tipodom;
-        $historicodomicilio->fecha_baja=$this->paciente->domicilio->fecha_baja;
-        $historicodomicilio->principal=$this->paciente->domicilio->principal;
+        $historicodomicilio->direccion=$this->paciente->domicilioprincipal->direccion;
+        $historicodomicilio->id_barrio=$this->paciente->domicilioprincipal->id_barrio;
+        $historicodomicilio->id_paciente=$this->paciente->domicilioprincipal->id_paciente;
+        $historicodomicilio->id_provincia=$this->paciente->domicilioprincipal->id_provincia;
+        $historicodomicilio->id_localidad=$this->paciente->domicilioprincipal->id_localidad;
+        $historicodomicilio->id_tipodom=$this->paciente->domicilioprincipal->id_tipodom;
+        $historicodomicilio->fecha_baja=$this->paciente->domicilioprincipal->fecha_baja;
+        $historicodomicilio->principal=$this->paciente->domicilioprincipal->principal;
 
         if ( !$historicodomicilio->save()) {
             $transaction->rollBack();

@@ -17,7 +17,7 @@ use yii\helpers\ArrayHelper;
     <? } ?>
     <?= $form->field($model, 'nombre')->textInput(['disabled'=>(count($model->registroatencions) >0)]) ?>
 
-    <?  echo $form->field($model, 'id_organismo')->dropDownList(ArrayHelper::map(Organismo::find()->all(), 'id','nombre'))->label('Organismo') ; ?>
+    <?  echo $form->field($model, 'id_organismo')->dropDownList(ArrayHelper::map(Organismo::find()->orderBy(['organismo.nombre'=>SORT_ASC])->all(), 'id','nombre'))->label('Organismo') ; ?>
 
 
 	<?php if (!Yii::$app->request->isAjax){ ?>

@@ -141,9 +141,9 @@ class Paciente extends \yii\db\ActiveRecord
       {
           return $this->hasMany(Registroatencion::className(), ['id_paciente' => 'id']);
       }
-    public function getDomicilio()
+    public function getDomicilioprincipal()
     {
       //CORREGIR DEVOLVER SOLO AQUELLOS DOMICILIO MARCADOS COMO PRINCIPAL
-       return $this->hasOne(Domicilio::className(), ['id_paciente' => 'id']);
+       return $this->hasOne(Domicilio::className(), ['id_paciente' => 'id'])->where(['principal' => true]);
     }
 }
