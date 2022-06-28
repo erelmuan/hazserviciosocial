@@ -15,8 +15,18 @@ use Yii;
  * @property Registroatencion[] $registroatencions
 
  */
+ use app\components\behaviors\AuditoriaBehaviors;
+
 class Area extends \yii\db\ActiveRecord
 {
+
+  public function behaviors() {
+      return array(
+          'AuditoriaBehaviors' => array(
+              'class' => AuditoriaBehaviors::className() ,
+          ) ,
+      );
+  }
     /**
      * {@inheritdoc}
      */

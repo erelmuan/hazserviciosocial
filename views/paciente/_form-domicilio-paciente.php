@@ -64,17 +64,20 @@ use kartik\datecontrol\DateControl;
 
 		</div>
     <div class="col-lg-1">
-    <?  if ($domicilio->isNewRecord)
+    <?  if ($domicilio->isNewRecord){
           echo $form->field($domicilio, 'id_barrio')->dropDownList(
             $domicilio->getBarrios(2845) ,
             ['prompt'=>'Por favor elija una',
           'id' => "domicilio-barrio{$key}",
           'name' => "Domicilios[$key][id_barrio]",
           ])->label(false);
+
+      }
       else
       {
-          $barrios = ArrayHelper::map(Barrio::find()->where(['id_localidad' =>$domicilio->id_localidad])->all(), 'id', 'nombre');
-          echo $form->field($domicilio, 'id_barrio')->dropDownList($barrios, [ 'id' => "domicilio-barrio{$key}",
+          $barrios = ArrayHelper::map(Barrio::find()->orderBy(['nombre' => SORT_DESC])->where(['id_localidad' =>$domicilio->id_localidad])->all(), 'id', 'nombre');
+          echo $form->field($domicilio, 'id_barrio')->dropDownList($barrios,
+          [ 'id' => "domicilio-barrio{$key}",
             'name' => "Domicilios[$key][id_barrio]"],)->label(false);
       }
 
@@ -89,7 +92,7 @@ use kartik\datecontrol\DateControl;
         'name' => "Domicilios[$key][principal]",
           'class' =>'form-control',
           'label' =>false,
-          // 'checked' => '1',
+           // 'checked' => '1',
           // 'value' => '1',
           'title' =>'Solo debe tener un domicilio principal'
 
