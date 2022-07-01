@@ -65,11 +65,11 @@ CrudAsset::register($this);
                  'rtl'=> true,
                    'search_contains' => true,
                    'single_backstroke_delete' => false,
-               ],])->label("Tipo");
+               ],])->label("Tipo de registro");
                 ?>
            </div>
            <div class='col-sm-3'>
-             <?=$form->field($model, 'numero_nota')->textInput([ 'value'=> $numero_insertar,'style'=> 'font-size:23px;color:red;','readOnly'=>true]) ; ?>
+             <?=$form->field($model, 'numero_nota')->textInput([ 'style'=> 'font-size:23px;color:red;']) ; ?>
              <?//= $form->field($model, 'id_organismo')->dropDownList($maporganismo, ['id'=>'id_organismo',    'prompt'=>'- Seleccionar organismo'])->label('Organismo') ;?>
 
               <?echo    $form->field($model, 'id_organismo')->widget(
@@ -79,7 +79,7 @@ CrudAsset::register($this);
                        'rtl'=> true,
                          'search_contains' => true,
                          'single_backstroke_delete' => false,
-                     ],])->label("Organismo");
+                     ],])->label("Organismo/Institución");
 
                      ?>
             </div>
@@ -105,7 +105,7 @@ CrudAsset::register($this);
                         'placeholder'=>'Seleccionar area...',
                         'url'=>Url::to(['/registroatencion/subcat'])
                      ]
-                 ])->label('Area');
+                 ])->label('Area/Sector');
 
                  ?>
                 <?=$form->field($model, 'id_usuario')->hiddenInput(["value"=>Yii::$app->user->identity->id])->label(false); ?>
@@ -115,7 +115,8 @@ CrudAsset::register($this);
                 <?=$form->field($model, "motivo")->textarea(["rows" => 5]) ; ?>
 
                 <?= $form->field($model, 'num_nota_automatico')->checkBox(['label' => 'Numero de nota automatico',
-                    'onclick' => 'cambioNumnotaAutomatico();', 'checked' => '1','value' => '1']); ?>
+                    'onclick' => 'cambioNumnotaAutomatico();', 'checked' => false,'value' => 0 ]); ?>
+
             </div>
           </div>
           <?  if (!Yii::$app->request->isAjax){ ?>
@@ -137,7 +138,32 @@ CrudAsset::register($this);
 <?php Modal::end(); ?>
 
 <script>
+
+function habilitarNota(){
+   if(document.getElementById("registroatencion-nota").value ==1 ){
+      document.getElementById("registroatencion-numero_nota").readOnly = false;
+      document.getElementById("registroatencion-num_nota_automatico").disabled = false;
+      // document.getElementById("registroatencion-nota").value =0;
+      // document.getElementById("registroatencion-nota").checked =true;
+
+   }else {
+     document.getElementById("registroatencion-numero_nota").readOnly = true;
+     document.getElementById("registroatencion-numero_nota").value = null;
+     document.getElementById("registroatencion-num_nota_automatico").disabled = true;
+     document.getElementById("registroatencion-num_nota_automatico").checked =false;
+     document.getElementById("registroatencion-num_nota_automatico").value =0;
+     // document.getElementById("registroatencion-nota").checked =false;
+     // document.getElementById("registroatencion-nota").value =1;
+
+
+     // document.getElementById("registroatencion-nota").checked =true;
+
+
+   }
+  }
+
 function cambioNumnotaAutomatico(){
+
     if(document.getElementById("registroatencion-num_nota_automatico").value==1 ){
       document.getElementById("registroatencion-numero_nota").readOnly = false;
       document.getElementById("registroatencion-num_nota_automatico").value =0;

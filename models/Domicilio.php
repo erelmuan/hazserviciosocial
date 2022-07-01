@@ -128,11 +128,11 @@ class Domicilio extends \yii\db\ActiveRecord
     }
     public function getLocalidades($id_provincia)
     {
-        return ArrayHelper::map(Localidad::find()->where(['id_provincia'=>$id_provincia])->all(), 'id','nombre');
+        return ArrayHelper::map(Localidad::find()->where(['id_provincia'=>$id_provincia])->orderBy(['nombre' => SORT_ASC])->all(), 'id','nombre');
     }
     public function getBarrios($id_localidad)
     {
-        $barrios=Barrio::find()->where(['id_localidad'=>$id_localidad])->all();
+        $barrios=Barrio::find()->where(['id_localidad'=>$id_localidad])->orderBy(['nombre' => SORT_ASC])->all();
         if(count($barrios)==0){
           return[null,null];
         }else {

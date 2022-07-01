@@ -29,12 +29,13 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'tiporeg',
-        'label'=> 'Tipo',
+        'label'=> 'Tipo de reg.',
         'value'=>'tiporeg.descripcion'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'organismo',
+        'label'=>'organismo/institución',
         'width' => '170px',
         'value' => function($model) {
           return Html::a( $model->organismo->nombre ,['organismo/view',"id"=> $model->organismo->id]
@@ -72,10 +73,21 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'area',
+        'label'=> 'Area/Sector',
         'width' => '170px',
         'value' => 'area.nombre'
 
     ],
+
+    [
+      'class'=>'\kartik\grid\BooleanColumn',
+      'label'=> 'Nota',
+      'attribute'=>'nota',
+      'value'=>'nota'
+
+
+   ],
+
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

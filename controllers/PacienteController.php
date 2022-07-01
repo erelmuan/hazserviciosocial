@@ -6,7 +6,7 @@ use app\models\PacienteSearch;
 use app\models\Provincia;
 use app\models\Domicilio;
 use app\models\Localidad;
-use app\models\Solicitud;
+use app\models\Registroatencion;
 use app\models\Obrasocial;
 use app\models\CarnetOsoc;
 use app\controllers\CarnetOsocController;
@@ -168,8 +168,8 @@ class PacienteController extends Controller {
     public function actionDelete($id) {
         $request = Yii::$app->request;
         Yii::$app->response->format = Response::FORMAT_JSON;
-          if (Solicitud::find()->where(['id_paciente'=>$id])->count()>0 ){
-            return ['title' => "Eliminar paciente #" . $id, 'content' => 'No se puede eliminar el paciente porque esta asociado a una solicitud', 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) ];
+          if (Registroatencion::find()->where(['id_paciente'=>$id])->count()>0 ){
+            return ['title' => "Eliminar paciente #" . $id, 'content' => 'No se puede eliminar el paciente porque esta asociado a un registro', 'footer' => Html::button('Cerrar', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) ];
           }
 
         if ($request->isAjax) {
@@ -178,7 +178,11 @@ class PacienteController extends Controller {
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
 
-                \Yii::$app ->db->createCommand()->delete('carnet_os', ['id_paciente' => $id])->execute();
+                \Yii::$app ->db->createCommand()->delete('carnet_osoc', ['id_paciente' => $id])->execute();
+                \Yii::$app ->db->createCommand()->delete('domicilio', ['id_paciente' => $id])->execute();
+                \Yii::$app ->db->createCommand()->delete('telefono', ['id_paciente' => $id])->execute();
+                \Yii::$app ->db->createCommand()->delete('correo', ['id_paciente' => $id])->execute();
+
                 if ($this->findModel($id)->delete()) {
                     return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
                 }

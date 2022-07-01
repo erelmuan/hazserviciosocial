@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Html;
+
+
 
 /**
  * This is the model class for table "registroatencion".
@@ -25,6 +28,7 @@ use Yii;
  * @property bool $num_nota_automatico
  * @property int $id_anionota
  * @property Anionota $anionota
+
  */
  use app\components\behaviors\AuditoriaBehaviors;
 
@@ -52,20 +56,40 @@ class Registroatencion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+                [['id_anionota', 'numero_nota'],
+                'unique',
+                'message' => 'El numero de nota ya fue asignado para el año seleccionado',
+                'targetAttribute' => ['id_anionota', 'numero_nota'],
+                'whenClient' => 'numNotaVacio',
+                     'when' => function($model) {
+                       $num= trim($model->numero_nota);
+                       if($num == '') {
+                         $model->numero_nota= null;
+                         return false; // No haga la validacion y añada el valor null a numero de nota cuando se envien nada
+                       }
+                       return true;
+                    }
+            ],
+
             [['id_paciente', 'motivo', 'id_tiporeg', 'id_organismo', 'id_usuario','fecha','id_anionota'], 'required'],
-            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario','id_area', 'id_anionota'], 'default', 'value' => null],
-            [['id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario','id_area', 'id_anionota'], 'integer'],
+            [['id_paciente', 'id_tiporeg', 'id_organismo',  'id_usuario','id_area', 'id_anionota','numero_nota'], 'default', 'value' => null],
+            [['id_paciente', 'id_tiporeg', 'id_organismo', 'id_usuario','id_area', 'id_anionota','numero_nota'], 'integer'],
             [['motivo'], 'string'],
             [['fecha'], 'safe'],
-            [['numero_nota'], 'required',  'whenClient' => "function (attribute, value) {
-              return $('#registroatencion-num_nota_automatico').val() == 0;
-          }"],
+          //   [['numero_nota'], 'integer',  'whenClient' => "function (attribute, value) {
+          //     return $('#registroatencion-num_nota_automatico').val() == 0;
+          // }"],
+
             [['id_organismo'], 'exist', 'skipOnError' => true, 'targetClass' => Organismo::className(), 'targetAttribute' => ['id_organismo' => 'id']],
             [['id_paciente'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['id_paciente' => 'id']],
             [['id_tiporeg'], 'exist', 'skipOnError' => true, 'targetClass' => Tiporeg::className(), 'targetAttribute' => ['id_tiporeg' => 'id']],
             [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_usuario' => 'id']],
             [['id_area'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['id_area' => 'id']],
-            [['id_anionota', 'numero_nota'], 'unique','message' => 'El numero de nota ya fue asignado para el año seleccionado','targetAttribute' => ['id_anionota', 'numero_nota']],
+          //   [['id_anionota', 'numero_nota'], 'unique','message' => 'El numero de nota ya fue asignado para el año seleccionado','targetAttribute' => ['id_anionota', 'numero_nota'],
+          //     'whenClient' => "function (attribute, value) {
+          //     return document.getElementById('registroatencion-numero_nota').value() !== '';
+          // }"],
+
             [['num_nota_automatico'], 'boolean'],
             [['id_anionota'], 'exist', 'skipOnError' => true, 'targetClass' => Anionota::className(), 'targetAttribute' => ['id_anionota' => 'id']],
 
@@ -81,6 +105,7 @@ class Registroatencion extends \yii\db\ActiveRecord
               'class'=>'\kartik\grid\DataColumn',
               'attribute'=>'id',
           ],
+
           [
               'attribute' => 'numero_nota',
               'width' => '50px',
@@ -89,7 +114,7 @@ class Registroatencion extends \yii\db\ActiveRecord
               'class'=>'\kartik\grid\DataColumn',
               'attribute'=>'paciente',
               'width' => '170px',
-              'value' => 'getLink',
+              'value' => 'pacienteurl',
                'filterInputOptions' => ['class' => 'form-control',  'placeholder' => 'DNI o apellido'],
                'format' => 'raw',
 
@@ -120,12 +145,13 @@ class Registroatencion extends \yii\db\ActiveRecord
           [
               'class'=>'\kartik\grid\DataColumn',
               'attribute'=>'tiporeg',
-              'label'=> 'Tipo',
+              'label'=> 'Tipo de reg.',
               'value'=>'tiporeg.descripcion'
           ],
           [
               'class'=>'\kartik\grid\DataColumn',
               'attribute'=>'organismo',
+              'label'=>'Organismo/Institución',
               'width' => '170px',
               'value' => 'getLinkdos',
                'filterInputOptions' => ['class' => 'form-control',  'placeholder' => 'Nombre del organismo'],
@@ -154,10 +180,19 @@ class Registroatencion extends \yii\db\ActiveRecord
           [
               'class'=>'\kartik\grid\DataColumn',
               'attribute'=>'area',
+              'label'=> 'Area/Sector',
               'width' => '170px',
               'value' => 'area.nombre'
-
           ],
+          [
+            'label'=> 'Nota',
+            'attribute'=>'nota',
+            'value'=>'nota',
+            'format'    => 'boolean',
+
+
+
+         ],
         ];
     }
     /**
@@ -169,12 +204,14 @@ class Registroatencion extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_paciente' => 'Id Paciente',
             'motivo' => 'Motivo',
-            'id_tiporeg' => 'Id Tiporeg',
+            'id_tiporeg' => 'Tipo de reg.',
             'id_organismo' => 'Id Organismo',
             'fecha' => 'Fecha',
             'numero_nota' => 'Numero Nota',
             'id_usuario' => 'Id Usuario',
-            'id_area' => 'Id Area',
+            'area' => 'Area/Sector',
+            'organismo' => 'Organismo/Institución',
+            'tiporeg'=>'Tipo de reg.',
         ];
     }
 
@@ -275,6 +312,7 @@ class Registroatencion extends \yii\db\ActiveRecord
          if ($anionota!== NULL){
            $registro= Registroatencion::find()
            ->andWhere(['and' ,' "fecha"::text  like '. "'%".$anionota->anio."%'"])
+           ->andWhere(['and' ,"numero_nota IS NOT NULL"])
            ->orderBy(['numero_nota' => SORT_DESC])->one();
 
          }
@@ -292,7 +330,21 @@ class Registroatencion extends \yii\db\ActiveRecord
         * @return \yii\db\ActiveQuery
       */
      public function getAnionota()
-       {
+     {
          return $this->hasOne(Anionota::className(), ['id' => 'id_anionota']);
      }
+     public function getNota()
+       {
+           if ($this->numero_nota == NULL )
+             return false;
+           else
+             return true;
+     }
+     public function getPacienteurl(){
+       return Html::a( $this->paciente->nombre .' '.$this->paciente->apellido,['paciente/view',"id"=> $this->paciente->id]
+         ,[    'class' => 'text-success','role'=>'modal-remote','title'=>'Datos del paciente','data-toggle'=>'tooltip']
+        );
+     }
+
+
 }

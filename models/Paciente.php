@@ -146,4 +146,12 @@ class Paciente extends \yii\db\ActiveRecord
       //CORREGIR DEVOLVER SOLO AQUELLOS DOMICILIO MARCADOS COMO PRINCIPAL
        return $this->hasOne(Domicilio::className(), ['id_paciente' => 'id'])->where(['principal' => true]);
     }
+    public function beforeSave($insert){
+    //DE FORMA INDIVIDUAL
+     if ($insert) {
+      $this->nombre = strtoupper($this->nombre);
+      $this->apellido = strtoupper($this->apellido);
+    }
+      return parent::beforeSave($insert);
+    }
 }

@@ -18,7 +18,9 @@ use app\models\CarnetOsoc;
 ?>
 
 
-<div id="w0" class="x_panel">
+<!-- <div id="w0" class="x_panel"> -->
+<div  class="x_panel">
+
     <div class="x_title">
         <h2> <?=$model->paciente->isNewRecord ? "<i class='glyphicon glyphicon-plus'></i> NUEVO PACIENTE" : "<i class='glyphicon glyphicon-pencil'></i> ACTUALIZAR PACIENTE" ; ?>
         </h2>
@@ -348,7 +350,7 @@ use app\models\CarnetOsoc;
         //Si el correo está vacío colocar 'nuevo' como clave, si no asignar el id del correo
         echo '<tr>';
         echo $this->render('_form-carnetosoc-paciente', [
-          'key' => $_correo->isNewRecord ? (strpos($key, 'nuevo') !== false ? $key : 'nuevo' . $key) : $_carnetOsoc->id,
+          'key' => $_carnetOsoc->isNewRecord ? (strpos($key, 'nuevo') !== false ? $key : 'nuevo' . $key) : $_carnetOsoc->id,
           'form' => $form,
           'carnetOsoc' => $_carnetOsoc,
         ]);

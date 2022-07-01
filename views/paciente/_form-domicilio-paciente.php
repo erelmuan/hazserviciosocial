@@ -9,6 +9,7 @@ use kartik\depdrop\DepDrop;
 use app\models\Barrio;
 use kartik\date\DatePicker;
 use kartik\datecontrol\DateControl;
+use kartik\select2\Select2;
 ?>
 
    <div class="row domicilio">
@@ -69,13 +70,39 @@ use kartik\datecontrol\DateControl;
             $domicilio->getBarrios(2845) ,
             ['prompt'=>'Por favor elija una',
           'id' => "domicilio-barrio{$key}",
+          'value'=> 76, //valor por default
           'name' => "Domicilios[$key][id_barrio]",
           ])->label(false);
+
+          // echo $form->field($domicilio, 'id_barrio')->widget(Select2::classname(), [
+          // 'data' => $domicilio->getBarrios(2845),
+          // 'options' => ['placeholder' => 'Select a color ...',
+          // // 'id' => "domicilio-barrio{$key}",
+          // // 'name' => "Domicilios[$key][id_barrio]",
+          // 'ajax' => [
+          //
+          //       'url' => Url::toRoute('barrio/arraybarrios'),
+          //
+          //       'dataType' => 'json',
+
+                // 'data' => new JsExpression('function(term,page) { return {search:term}; }'),
+                //
+                // 'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
+
+            // ],
+
+      //      'multiple' => false],
+      //     'pluginOptions' => [
+      //         'tags' => true,
+      //         'allowClear' => false,
+      //             'disabled' => false
+      //     ],
+      // ])->label(false);
 
       }
       else
       {
-          $barrios = ArrayHelper::map(Barrio::find()->orderBy(['nombre' => SORT_DESC])->where(['id_localidad' =>$domicilio->id_localidad])->all(), 'id', 'nombre');
+          $barrios = ArrayHelper::map(Barrio::find()->orderBy(['nombre' => SORT_ASC])->where(['id_localidad' =>$domicilio->id_localidad])->all(), 'id', 'nombre');
           echo $form->field($domicilio, 'id_barrio')->dropDownList($barrios,
           [ 'id' => "domicilio-barrio{$key}",
             'name' => "Domicilios[$key][id_barrio]"],)->label(false);

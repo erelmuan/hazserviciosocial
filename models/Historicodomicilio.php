@@ -20,7 +20,7 @@ use Yii;
  * @property Barrio $barrio
  * @property Localidad $localidad
  * @property Paciente $paciente
- * @property Provincia $id0
+* @property Provincia $provincia
  *
  * @property Registroatencion $registroatencion
  */
@@ -50,6 +50,7 @@ class Historicodomicilio extends \yii\db\ActiveRecord
             [['id_paciente'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['id_paciente' => 'id']],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Provincia::className(), 'targetAttribute' => ['id' => 'id']],
             [['id_registroatencion'], 'exist', 'skipOnError' => true, 'targetClass' => Registroatencion::className(), 'targetAttribute' => ['id_registroatencion' => 'id']],
+ 		           [['id_provincia'], 'exist', 'skipOnError' => true, 'targetClass' => Provincia::className(), 'targetAttribute' => ['id_provincia' => 'id']],
         ];
     }
 
@@ -105,11 +106,11 @@ class Historicodomicilio extends \yii\db\ActiveRecord
       }
 
       /**
-       * @return \yii\db\ActiveQuery
-       */
-      public function getId0()
-      {
-          return $this->hasOne(Provincia::className(), ['id' => 'id']);
-      }
+ 		    * @return \yii\db\ActiveQuery
+ 		    */
+ 		   public function getProvincia()
+ 		   {
+ 		       return $this->hasOne(Provincia::className(), ['id' => 'id_provincia']);
+ 		   }
 
 }

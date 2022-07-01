@@ -89,6 +89,8 @@ class RegistroatencionController extends Controller
          $paciente= Paciente::findOne($id_paciente);
 
          if ($this->request->isPost) {
+
+
            if ($model->load($request->post()) && !$this->validar($_POST["Registroatencion"]["fecha"])) {
               return $this->render('_form', ['model' => $model, 'paciente' => $paciente ,  'numero_insertar'=> Registroatencion::obtenerNumeroNota()]);
            }

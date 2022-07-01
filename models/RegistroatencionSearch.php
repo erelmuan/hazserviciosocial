@@ -23,6 +23,8 @@ class RegistroatencionSearch extends Registroatencion
     public $tiporeg;
     public $fecha_desde;
     public $fecha_hasta;
+    public $nota;
+
     /**
      * @inheritdoc
      */
@@ -32,6 +34,7 @@ class RegistroatencionSearch extends Registroatencion
             [['id', 'id_paciente', 'id_tiporeg', 'id_organismo', 'numero_nota', 'id_usuario'], 'integer'],
             [['fecha_desde','fecha_hasta','motivo', 'fecha'], 'safe'],
             ['fecha', 'date', 'format' => 'dd/MM/yyyy'],
+            [['num_nota_automatico' ,'nota'], 'boolean'],
             [['paciente','tiporeg','organismo','usuario','localidad','barrio','area'], 'safe'],
 
         ];
@@ -61,12 +64,12 @@ class RegistroatencionSearch extends Registroatencion
         ->innerJoinWith('usuario', 'usuario.id = registroatencion.id_usuario')
         ->innerJoinWith('organismo', 'organismo.id = registroatencion.id_organismo')
         ->leftJoin('area', 'area.id = registroatencion.id_area')
-        //condidero a los registros que tienen pacientes sin importar si tienen domicilio
+         //condidero a los registros que tienen pacientes sin importar si tienen domicilio
         ->leftJoin('historicodomicilio',  'paciente.id =historicodomicilio.id_paciente')
         ->leftJoin('localidad',  'localidad.id =historicodomicilio.id_localidad')
         ->leftJoin('barrio',  'barrio.id =historicodomicilio.id_barrio')
-
-        ;
+        ->orderBy(['registroatencion.id' => SORT_DESC])
+         ;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -84,13 +87,24 @@ class RegistroatencionSearch extends Registroatencion
             'id' => $this->id,
             'fecha' => $this->fecha,
             'numero_nota' => $this->numero_nota,
+            'id_usuario' => $this->id_usuario,
+            'id_area' => $this->id_area,
+            'num_nota_automatico' => $this->num_nota_automatico,
+            'id_anionota' => $this->id_anionota,
+
         ]);
         if (is_numeric($this->paciente)){
             $query->orFilterWhere(["paciente.num_documento"=>$this->paciente]);
              }
         else {
             $query->andFilterWhere(['ilike', '("paciente"."apellido")',strtolower($this->paciente)]);
+        }
 
+        if ($this->nota ==1){
+          $query->andWhere(['not', ['numero_nota' => null]]);
+             }
+        if ($this->nota !="" && $this->nota ==0){
+          $query->andWhere(['is', 'numero_nota', new \yii\db\Expression('null')]);
         }
         $query->andFilterWhere(['ilike', 'motivo', $this->motivo])
         ->andFilterWhere(['ilike', 'usuario.nombre', $this->usuario])
