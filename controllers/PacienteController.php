@@ -62,7 +62,9 @@ class PacienteController extends Controller {
         $request = Yii::$app->request;
         $carnet = CarnetOsocController::findidpacModel($id);
         $model = $this->findModel($id);
-        $model->fecha_nacimiento = date('d/m/Y', strtotime($model->fecha_nacimiento));
+        if($model->fecha_nacimiento !== NULL){
+          $model->fecha_nacimiento = date('d/m/Y', strtotime($model->fecha_nacimiento));
+        }
         if ($request->isAjax) {
             Yii::$app
                 ->response->format = Response::FORMAT_JSON;

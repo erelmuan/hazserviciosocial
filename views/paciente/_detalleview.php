@@ -1,6 +1,7 @@
 <?
 use yii\widgets\DetailView;
 ?>
+<?var_dump( $model->fecha_nacimiento) ;?>
 <?= DetailView::widget([
     'model' => $model,
     'attributes' => [
@@ -15,7 +16,7 @@ use yii\widgets\DetailView;
         'value'=> $model->nacionalidad->gentilicio,
         'label'=> 'Nacionalidad',
        ],
-        'fecha_nacimiento',
+       'fecha_nacimiento',
         // 'email',
         [
             'label' => 'Domicilio',

@@ -44,7 +44,7 @@ class Paciente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'sexo', 'fecha_nacimiento', 'apellido'], 'required'],
+            [['nombre', 'sexo',  'apellido'], 'required'],
             [['sexo', 'hc', 'num_documento'], 'string'],
             [['fecha_nacimiento'], 'safe'],
             [['id_nacionalidad', 'id_tipodoc'], 'default', 'value' => null],
