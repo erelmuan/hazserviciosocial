@@ -153,7 +153,7 @@ class Registroatencion extends \yii\db\ActiveRecord
               'attribute'=>'organismo',
               'label'=>'Organismo/Institución',
               'width' => '170px',
-              'value' => 'getLinkdos',
+              'value' => 'organismourl',
                'filterInputOptions' => ['class' => 'form-control',  'placeholder' => 'Nombre del organismo'],
                'format' => 'raw',
 
@@ -343,6 +343,11 @@ class Registroatencion extends \yii\db\ActiveRecord
      public function getPacienteurl(){
        return Html::a( $this->paciente->nombre .' '.$this->paciente->apellido,['paciente/view',"id"=> $this->paciente->id]
          ,[    'class' => 'text-success','role'=>'modal-remote','title'=>'Datos del paciente','data-toggle'=>'tooltip']
+        );
+     }
+     public function getOrganismourl(){
+       return Html::a( $this->organismo->nombre ,['organismo/view',"id"=> $this->organismo->id]
+         ,[    'class' => 'text-success','role'=>'modal-remote','title'=>'Datos del organismo','data-toggle'=>'tooltip']
         );
      }
 

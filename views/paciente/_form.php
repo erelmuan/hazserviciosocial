@@ -146,6 +146,7 @@ use app\models\CarnetOsoc;
   </div>
 
   <?php
+
    //Recorrer los domicilios
     foreach ($model->domicilios as $key => $_domicilio) {
       //Para cada domicilio renderizar el formulario de domicilio
@@ -168,6 +169,11 @@ use app\models\CarnetOsoc;
     ]);
     echo '</div>';
     ?>
+    <? if (count($model->domicilios) ==0){ ?>
+    <script>
+    $('#paciente-domicilios').append($('#paciente-nuevo-domicilio-block').html().replace(/__id__/g, 'nuevo' + 1));
+    </script>
+  <? }?>
   <!--Fin sección de domicilio -->
 
   <!--Inicio sección de telefono -->
