@@ -50,11 +50,7 @@ class SiteController extends Controller {
         }
         ], ], ], 'verbs' => ['class' => VerbFilter::className() , 'actions' => ['logout' => ['post'], ], ], ];
     }
-    public function actionFlash() {
-        $session = Yii::$app->session; // establece un mensaje flash llamado "greeting "
-        $session->setFlash('saludo ', 'Hola usuarioator! ');
-        return $this->render('flash');
-    }
+
     /**
      * {@inheritdoc}
      */
