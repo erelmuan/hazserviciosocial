@@ -4,6 +4,10 @@ use yii\helpers\Html;
 
 return [
 
+      [
+          'class'=>'\kartik\grid\DataColumn',
+          'attribute'=>'id',
+      ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'numero_nota',

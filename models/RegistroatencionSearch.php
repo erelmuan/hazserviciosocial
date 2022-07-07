@@ -65,7 +65,7 @@ class RegistroatencionSearch extends Registroatencion
         ->innerJoinWith('organismo', 'organismo.id = registroatencion.id_organismo')
         ->leftJoin('area', 'area.id = registroatencion.id_area')
          //condidero a los registros que tienen pacientes sin importar si tienen domicilio
-        ->leftJoin('historicodomicilio',  'paciente.id =historicodomicilio.id_paciente')
+        ->leftJoin('historicodomicilio',  'registroatencion.id =historicodomicilio.id_registroatencion')
         ->leftJoin('localidad',  'localidad.id =historicodomicilio.id_localidad')
         ->leftJoin('barrio',  'barrio.id =historicodomicilio.id_barrio')
         ->orderBy(['registroatencion.id' => SORT_DESC])
@@ -84,7 +84,7 @@ class RegistroatencionSearch extends Registroatencion
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'registroatencion.id' => $this->id,
             'fecha' => $this->fecha,
             'numero_nota' => $this->numero_nota,
             'id_usuario' => $this->id_usuario,
