@@ -15,6 +15,7 @@ use yii\widgets\MaskedInput;
 
    <div class="row telefono">
      <div class="col-lg-2">
+<<<<<<< Updated upstream
        <?=$form->field($telefono, 'numero')->textInput(
          [
            'id' => "telefono-numero{$key}",
@@ -22,6 +23,19 @@ use yii\widgets\MaskedInput;
           'class' =>'form-control'
        ]
          )->label(false);?>
+=======
+       <?=$form->field($telefono, 'numero')->widget(\yii\widgets\MaskedInput::className(), [
+     	'clientOptions' => [
+        'name' => 'input-5',
+        'alias' =>  ['9999-99999999', '9999-99999999'],
+     	],
+      'options' => [
+        'id' => "telefono-numero{$key}",
+        'name' => "Telefonos[$key][numero]",
+         ],
+     ])->label(false);
+     ?>
+>>>>>>> Stashed changes
      </div>
      <div class="col-lg-2">
        <?= $form->field($telefono, 'id_empresa')->dropDownList(
