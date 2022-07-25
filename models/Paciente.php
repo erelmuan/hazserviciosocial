@@ -45,10 +45,10 @@ class Paciente extends \yii\db\ActiveRecord
     {
         return [
             [['nombre', 'sexo',  'apellido'], 'required'],
-            [['sexo', 'hc', 'num_documento'], 'string'],
+            [['sexo', 'hc'], 'string'],
             [['fecha_nacimiento'], 'safe'],
             [['id_nacionalidad', 'id_tipodoc'], 'default', 'value' => null],
-            [['id_nacionalidad', 'id_tipodoc'], 'integer'],
+            [['id_nacionalidad', 'id_tipodoc','num_documento'], 'integer'],
             [['nombre'], 'string', 'max' => 50],
             [['apellido'], 'string', 'max' => 60],
             [['id_nacionalidad', 'id_tipodoc', 'id_localidad', 'id_provincia'], 'default', 'value' => null],
