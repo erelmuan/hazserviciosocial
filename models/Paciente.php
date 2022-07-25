@@ -28,7 +28,6 @@ use Yii;
  * @property Solicitudpap[] $solicitudpaps
  * @property Telefono[] $telefonos
  */
- use app\components\behaviors\AuditoriaBehaviors;
 
 class Paciente extends \yii\db\ActiveRecord
 {
