@@ -12,8 +12,17 @@ use Yii;
  * @property bool $activo
  * @property Registroatencion[] $registroatencions
  */
+ use app\components\behaviors\AuditoriaBehaviors;
+
 class Anionota extends \yii\db\ActiveRecord
 {
+  public function behaviors() {
+      return array(
+          'AuditoriaBehaviors' => array(
+              'class' => AuditoriaBehaviors::className() ,
+          ) ,
+      );
+  }
     /**
      * {@inheritdoc}
      */

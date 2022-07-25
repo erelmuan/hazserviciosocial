@@ -6,16 +6,20 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Domicilio */
 ?>
 <div class="domicilio-view">
- 
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'direccion',
-            'id_barrio',
-            'id_paciente',
-            'id_provincia',
-            'id_localidad',
+            'barrio.nombre',
+            'paciente.apellido',
+            [
+              'value'=> $model->paciente->nombre.' '.$model->paciente->apellido,
+              'label'=> 'Paciente',
+           ],
+            'provincia.nombre',
+            'localidad.nombre',
             'id_tipodom',
             'fecha_baja',
         ],

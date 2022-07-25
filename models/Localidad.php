@@ -17,8 +17,17 @@ use Yii;
  * @property Provincia $provincia
  * @property Obrasocial[] $obrasocials
  */
+ use app\components\behaviors\AuditoriaBehaviors;
+
 class Localidad extends \yii\db\ActiveRecord
 {
+  public function behaviors() {
+      return array(
+          'AuditoriaBehaviors' => array(
+              'class' => AuditoriaBehaviors::className() ,
+          ) ,
+      );
+  }
     /**
      * {@inheritdoc}
      */
