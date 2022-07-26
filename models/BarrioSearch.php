@@ -58,7 +58,7 @@ class BarrioSearch extends Barrio
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'barrio.id' => $this->id,
             'id_localidad' => $this->id_localidad,
         ]);
         $query->andFilterWhere(['ilike', 'barrio.nombre', $this->nombre])

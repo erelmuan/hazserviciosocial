@@ -63,7 +63,7 @@ class LocalidadSearch extends Localidad
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'localidad.id' => $this->id,
             // 'provincia.nombre' => $this->provincia,
             'codigopostal' => $this->codigopostal,
         ]);

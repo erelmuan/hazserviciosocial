@@ -60,7 +60,7 @@ class AreaSearch extends Area
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'area.id' => $this->id,
         ]);
         $query->andFilterWhere(['ilike', 'area.nombre', $this->nombre])
         ->andFilterWhere(['ilike', 'organismo.nombre', $this->organismo]);
