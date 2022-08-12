@@ -71,7 +71,7 @@ class Registroatencion extends \yii\db\ActiveRecord
                     }
             ],
 
-            [['id_paciente', 'motivo', 'id_tiporeg', 'id_organismo', 'id_usuario','fecha','id_anionota'], 'required'],
+            [['id_paciente', 'motivo', 'id_tiporeg','id_usuario','fecha','id_anionota'], 'required'],
             [['id_paciente', 'id_tiporeg', 'id_organismo',  'id_usuario','id_area', 'id_anionota','numero_nota'], 'default', 'value' => null],
             [['id_paciente', 'id_tiporeg', 'id_organismo', 'id_usuario','id_area', 'id_anionota','numero_nota'], 'integer'],
             [['motivo'], 'string'],
