@@ -62,7 +62,7 @@ class RegistroatencionSearch extends Registroatencion
         ->innerJoinWith('paciente', true)
         ->innerJoinWith('tiporeg', 'tiporeg.id = registroatencion.id_tiporeg')
         ->innerJoinWith('usuario', 'usuario.id = registroatencion.id_usuario')
-        ->rightJoin('organismo', 'organismo.id = registroatencion.id_organismo')
+        ->leftJoin('organismo', 'organismo.id = registroatencion.id_organismo')
         ->leftJoin('area', 'area.id = registroatencion.id_area')
          //condidero a los registros que tienen pacientes sin importar si tienen domicilio
         ->leftJoin('historicodomicilio',  'registroatencion.id =historicodomicilio.id_registroatencion')
