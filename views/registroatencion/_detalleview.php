@@ -15,7 +15,7 @@ use yii\widgets\DetailView;
           'label'=> 'Tipo de registro',
         ],
         [
-          'value'=> $model->organismo->nombre,
+          'value'=> ($model->organismo)?$model->organismo->nombre:'(No definido)',
           'label'=> 'Organismo',
         ],
         [
