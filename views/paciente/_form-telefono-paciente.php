@@ -22,12 +22,9 @@ use yii\widgets\MaskedInput;
           'class' =>'form-control'
        ]
          )->label(false);?>
-       <?=$form->field($telefono, 'numero')->widget(\yii\widgets\MaskedInput::className(), [
-
-      'options' => [
+       <?=$form->field($telefono, 'numero')->textInput( [
         'id' => "telefono-numero{$key}",
         'name' => "Telefonos[$key][numero]",
-         ],
      ])->label(false);
      ?>
      </div>
