@@ -22,11 +22,7 @@ use yii\widgets\MaskedInput;
           'class' =>'form-control'
        ]
          )->label(false);?>
-       <?=$form->field($telefono, 'numero')->textInput( [
-        'id' => "telefono-numero{$key}",
-        'name' => "Telefonos[$key][numero]",
-     ])->label(false);
-     ?>
+  
      </div>
      <div class="col-lg-2">
        <?= $form->field($telefono, 'id_empresa')->dropDownList(
