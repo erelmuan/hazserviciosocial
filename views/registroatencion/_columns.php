@@ -42,7 +42,7 @@ return [
         'label'=>'organismo/institución',
         'width' => '170px',
         'value' => function($model) {
-          return Html::a( $model->organismo->nombre ,['organismo/view',"id"=> $model->organismo->id]
+          return Html::a( ($model->organismo)?$model->organismo->nombre:'No definido' ,['organismo/view',"id"=> ($model->organismo)?$model->organismo->id:'No definido']
             ,[    'class' => 'text-success','role'=>'modal-remote','title'=>'Datos del organismo','data-toggle'=>'tooltip']
            );
          },
