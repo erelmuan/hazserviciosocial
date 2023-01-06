@@ -21,7 +21,9 @@ class AnionotaController extends Controller
             $this->setearMensajeError('NO SE PUEDE DESELECCIONAR DIRECTAMENTE EL ACTIVO, DEBE SELECCIONAR ACTIVO OTRA AÑO ');
             return false;
         }
-
+        if ($valor_enviado["activo"] == true && $model->activo == false) {
+                 $model->actualizarEstado();
+             }
         return true;
         //si tiene solicitudes no se podra modificar el año
 
